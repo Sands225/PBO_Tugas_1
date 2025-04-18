@@ -1,7 +1,6 @@
-import java.util.List;
-import java.util.Scanner;
+package models;
 
-class Admin extends User {
+public class Admin extends User {
     public Admin(String name, String password) {
         super(name, password, "admin");
     }

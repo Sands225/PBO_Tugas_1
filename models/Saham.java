@@ -1,3 +1,5 @@
+package models;
+
 public class Saham {
     String code;
     String company;
