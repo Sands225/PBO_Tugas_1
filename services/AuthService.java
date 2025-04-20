@@ -28,11 +28,10 @@ public class AuthService {
                     return;
                 }
             }
-            System.out.println("Username atau password tidak valid! Coba lagi!");
-
-            View view = new View();
-            view.mainView();
-            return;
         }
+        System.out.println("Username atau password tidak valid! Coba lagi!");
+
+        View view = new View();
+        view.mainView();
     }
 }
