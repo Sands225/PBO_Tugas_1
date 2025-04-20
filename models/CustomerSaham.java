@@ -23,16 +23,7 @@ public class CustomerSaham {
         return quantity;
     }
 
-    public double subtractQuantity(double amount) {
-        if (amount > quantity) {
-            System.out.println("Jumlah saham tidak mencukupi");
-        } else {
-            quantity -= amount;
-        }
-        return amount;
-    }
-
-    public void addQuantity(double amount) {
-        quantity += amount;
+    public void setQuantity(double quantity) {
+        this.quantity = quantity;
     }
 }
