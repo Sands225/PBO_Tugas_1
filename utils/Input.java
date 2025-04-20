@@ -21,14 +21,18 @@ public class Input {
         } catch (NumberFormatException e) {
             System.out.println("Pilihan harus berupa angka!");
         }
-//        int inputNumber = scanner.nextInt();
         return inputNumber;
     }
 
     public double inputNextDouble(String prompt) {
         System.out.print(prompt);
 
-        double inputNumber = scanner.nextDouble();
+        double inputNumber = -1;
+        try {
+            inputNumber = Double.parseDouble(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            System.out.println("Input harus berupa angka desimal!");
+        }
         return inputNumber;
     }
 }
