@@ -25,10 +25,10 @@ public class SahamService {
             if (customerSaham.getSaham().getCode().equals(sahamCode)) {
                 customerSaham.setQuantity(customerSaham.getQuantity() - sahamQuantity);
 
-                System.out.println("Selamat! Anda berhasil menjual" + sahamQuantity + " saham " + sahamCode);
+                System.out.println("Selamat! Anda berhasil menjual " + sahamQuantity + " saham " + sahamCode);
 
                 if (customerSaham.getQuantity() > 0) {
-                    System.out.printf("📊 Sisa saham Anda di %s: %.2f lembar\n", sahamCode, customerSaham.getQuantity());
+                    System.out.printf("Sisa saham Anda di %s: %.2f lembar\n", sahamCode, customerSaham.getQuantity());
                 } else {
                     toRemove = customerSaham;
                 }
@@ -38,8 +38,6 @@ public class SahamService {
         if (toRemove != null) {
             DataStore.customerSaham.remove(toRemove);
             System.out.println("Anda sudah tidak memiliki saham " + sahamCode + " di portofolio Anda.");
-        } else {
-            System.out.println("Anda memiliki "  + sahamCode);
         }
     }
 }
