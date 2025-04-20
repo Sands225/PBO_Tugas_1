@@ -9,7 +9,7 @@ import views.CustomerView;
 import views.View;
 
 public class AuthService {
-    public void loginHandler(String inputName, String inputPassword) {
+    public boolean loginHandler(String inputName, String inputPassword) {
         for (User user: DataStore.users) {
             if (user.getName().equals(inputName) && user.getPassword().equals(inputPassword)) {
                 if (user instanceof Admin) {
@@ -18,20 +18,18 @@ public class AuthService {
 
                     AdminView adminView = new AdminView();
                     adminView.adminMenu();
-                    return;
+                    return true;
                 } else if (user instanceof Customer) {
                     Customer customer = (Customer) user;
                     System.out.printf("Selamat datang %s!\n", customer.getName());
 
                     CustomerView customerView = new CustomerView();
                     customerView.customerMenu(customer);
-                    return;
+                    return true;
                 }
             }
         }
         System.out.println("Username atau password tidak valid! Coba lagi!");
-
-        View view = new View();
-        view.mainView();
+        return false;
     }
 }

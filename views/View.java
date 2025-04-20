@@ -27,16 +27,20 @@ public class View {
                     return;
                 default:
                     System.out.println("Pilihan tidak valid! Coba kembali");
-                    mainView();
+//                    mainView();
             }
         } while (choice < 1 || choice > 3);
     }
 
     public void loginView() {
-        String inputName = input.inputNextLine("Masukkan nama: ");
-        String inputPassword = input.inputNextLine("Masukkan password: ");
-
         AuthService authService = new AuthService();
-        authService.loginHandler(inputName, inputPassword);
+        boolean isLoggedIn = false;
+
+        while (!isLoggedIn) {
+            String inputName = input.inputNextLine("Masukkan nama: ");
+            String inputPassword = input.inputNextLine("Masukkan password: ");
+
+            isLoggedIn = authService.loginHandler(inputName, inputPassword);
+        }
     }
 }
