@@ -1,6 +1,5 @@
 package views;
 
-import services.AuthService;
 import utils.Input;
 
 public class View {
@@ -32,11 +31,5 @@ public class View {
         } while (choice < 1 || choice > 3);
     }
 
-    public void loginView() {
-        String inputName = input.inputNextLine("Masukkan nama: ");
-        String inputPassword = input.inputNextLine("Masukkan password: ");
-
-        AuthService authService = new AuthService();
-        authService.loginHandler(inputName, inputPassword);
-    }
+    public void loginView() {}
 }
