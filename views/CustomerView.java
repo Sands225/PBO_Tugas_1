@@ -31,9 +31,20 @@ public class CustomerView {
         } while (choice < 1 || choice > 3);
     }
 
+    public void showAllCustomerSaham(Customer customer) {
+        System.out.println("Saham yang Anda miliki: ");
+        for (CustomerSaham customerSaham: DataStore.customerSaham) {
+            if(customerSaham.getCustomerName().equals(customer.getName())) {
+                System.out.println("Kode saham: " + customerSaham.getSaham().getCode());
+                System.out.println("Jumlah saham: " + customerSaham.getQuantity());
+            }
+        }
+    }
+
     public void customerSahamMenu(Customer customer) {
         int choice;
 
+        showAllCustomerSaham(customer);
         do {
             System.out.println("1. Jual Saham");
             System.out.println("2. Beli Saham");
