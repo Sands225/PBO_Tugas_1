@@ -7,7 +7,7 @@ public class Input {
 
     public String inputNextLine(String prompt) {
         System.out.print(prompt);
-
+        
         String input = scanner.nextLine();
         return input;
     }
@@ -15,7 +15,13 @@ public class Input {
     public int inputNextInt(String prompt) {
         System.out.print(prompt);
 
-        int inputNumber = scanner.nextInt();
+        int inputNumber = -1;
+        try {
+            inputNumber = Integer.parseInt(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            System.out.println("Pilihan harus berupa angka!");
+        }
+//        int inputNumber = scanner.nextInt();
         return inputNumber;
     }
 
