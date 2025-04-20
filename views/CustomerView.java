@@ -117,6 +117,7 @@ public class CustomerView {
             }
 
             sahamService.customerSellSaham(sahamCode, quantity, customer);
+            customerMenu(customer);
             return;
         }
     }
