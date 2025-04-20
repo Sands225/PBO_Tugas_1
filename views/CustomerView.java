@@ -3,11 +3,13 @@ package views;
 import data.DataStore;
 import models.Customer;
 import models.CustomerSaham;
+import services.SahamService;
 import utils.Input;
 import views.View;
 
 public class CustomerView {
-    private Input input = new Input();
+    private final Input input = new Input();
+    private final SahamService sahamService = new SahamService();
 
     public void customerMenu(Customer customer) {
         int choice;
@@ -41,6 +43,10 @@ public class CustomerView {
         }
     }
 
+    public void showCustomerSaham(Customer customer) {
+        System.out.println("Saham yang Anda: ");
+    }
+
     public void customerSahamMenu(Customer customer) {
         int choice;
 
@@ -53,7 +59,7 @@ public class CustomerView {
 
             switch (choice) {
                 case 1:
-//                    customerSellSaham(customer);
+                    customerSellSaham(customer);
                     break;
                 case 2:
 //                    customerBuySahamu(customer);
@@ -63,5 +69,55 @@ public class CustomerView {
                     view.mainView();
             }
         } while (choice < 1 || choice > 3);
+    }
+
+    private boolean retry() {
+        int choice;
+
+        do {
+            System.out.println("==================================");
+            System.out.println("1. Coba lagi");
+            System.out.println("2. Kembali ke menu sebelumnya");
+            System.out.println("==================================");
+            choice = input.inputNextInt("Masukkan pilihan Anda: ");
+
+            switch (choice) {
+                case 1:
+                    return true;
+                case 2:
+                    return false;
+                default:
+                    System.out.println("Pilihan tidak valid. Silakan pilih 1 atau 2.");
+                    break;
+            }
+        } while (true);
+    }
+
+    public void customerSellSaham(Customer customer) {
+        while (true) {
+            showAllCustomerSaham(customer);
+
+            String sahamCode = input.inputNextLine("Masukkan kode saham: ");
+            CustomerSaham custSaham = sahamService.checkCustomerSahamCode(sahamCode);
+
+            if (custSaham == null) {
+                System.out.println("Kode saham tidak ditemukan di portofolio Anda.");
+                if (!retry()) return;
+                continue;
+            }
+
+            double quantity = input.inputNextDouble("Masukkan jumlah saham: ");
+            boolean qtyStatus = sahamService.checkCustomerSahamQuantity(quantity, custSaham.getQuantity());
+
+            if (!qtyStatus) {
+                System.out.printf("Jumlah saham tidak mencukupi. Anda hanya memiliki %.2f saham %s.\n",
+                        custSaham.getQuantity(), custSaham.getSaham().getCode());
+                if (!retry()) return;
+                continue;
+            }
+
+            sahamService.customerSellSaham(sahamCode, quantity, customer);
+            return;
+        }
     }
 }
