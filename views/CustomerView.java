@@ -1,8 +1,7 @@
 package views;
 
 import data.DataStore;
-import models.Customer;
-import models.CustomerSaham;
+import models.*;
 import services.SahamService;
 import utils.Input;
 import views.View;
@@ -43,6 +42,15 @@ public class CustomerView {
         }
     }
 
+    public void showAllAvailableSaham() {
+        System.out.println("Saham yang tersedia: ");
+        for (Saham saham: DataStore.saham) {
+            System.out.println("Kode saham: " + saham.getCode());
+            System.out.println("Perusahaan: " + saham.getCompany());
+            System.out.println("Harga saham: " + saham.getPrice());
+        }
+    }
+
     public void showCustomerSaham(Customer customer) {
         System.out.println("Saham yang Anda: ");
     }
@@ -62,7 +70,7 @@ public class CustomerView {
                     customerSellSaham(customer);
                     break;
                 case 2:
-//                    customerBuySahamu(customer);
+//                    customerBuySaham(customer);
                     break;
                 case 3:
                     View view = new View();
