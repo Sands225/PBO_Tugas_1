@@ -11,6 +11,7 @@ import javax.xml.crypto.Data;
 public class CustomerView {
     private final Input input = new Input();
     private final SahamService sahamService = new SahamService();
+    private final SBNService sbnService = new SBNService();
 
     public void customerMenu(Customer customer) {
         int choice;
@@ -247,24 +248,15 @@ public class CustomerView {
             }
 
             double nominal = input.inputNextDouble("Masukkan jumlah nominal pembelian SBN: ");
-            if (nominal <= 0) {
-                System.out.println("❌ Nominal harus lebih dari 0.");
+            boolean isNominalValid = sbnService.checkNominalInvestasi(sbnToBuy, nominal);
+
+            if (!isNominalValid) {
                 if (!retry()) {
                     customerSBNMenu(customer);
                     return;
                 }
                 continue;
             }
-
-            if (nominal > sbnToBuy.getKuotaNasional()) {
-                System.out.printf("❌ Kuota tidak mencukupi. Maksimum pembelian: %.2f\n", sbnToBuy.getKuotaNasional());
-                if (!retry()) {
-                    customerSBNMenu(customer);
-                    return;
-                }
-                continue;
-            }
-
             sbnToBuy.setKuotaNasional(sbnToBuy.getKuotaNasional() - nominal);
 
             boolean found = false;
