@@ -2,6 +2,7 @@ package services;
 
 import models.Customer;
 import models.CustomerSaham;
+import models.Saham;
 import data.DataStore;
 
 public class SahamService {
@@ -39,5 +40,14 @@ public class SahamService {
             DataStore.customerSaham.remove(toRemove);
             System.out.println("Anda sudah tidak memiliki saham " + sahamCode + " di portofolio Anda.");
         }
+    }
+
+    public Saham getSahamByCode(String sahamCode) {
+        for (Saham saham: DataStore.saham) {
+            if (saham.getCode().equals(sahamCode)) {
+                return saham;
+            }
+        }
+        return null;
     }
 }
