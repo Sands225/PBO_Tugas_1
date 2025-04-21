@@ -5,9 +5,9 @@ public class SBN {
     double interestRate;
     int jangkaWaktu; // in years or months
     String tanggalJatuhTempo; // could use java.time.LocalDate for better handling
-    int kuotaNasional;
+    double kuotaNasional;
 
-    public SBN(String name, double interestRate, int jangkaWaktu, String tanggalJatuhTempo, int kuotaNasional) {
+    public SBN(String name, double interestRate, int jangkaWaktu, String tanggalJatuhTempo, double kuotaNasional) {
         this.name = name;
         this.interestRate = interestRate;
         this.jangkaWaktu = jangkaWaktu;
@@ -31,11 +31,11 @@ public class SBN {
         return tanggalJatuhTempo;
     }
 
-    public int getKuotaNasional() {
+    public double getKuotaNasional() {
         return kuotaNasional;
     }
 
-    public void setKuotaNaisonal(int kuotaNasional) {
+    public void setKuotaNasional(double kuotaNasional) {
         this.kuotaNasional = kuotaNasional;
     }
 }
