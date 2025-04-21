@@ -181,6 +181,16 @@ public class CustomerView {
         }
     }
 
+    public void showAllSBN() {
+        for(SBN sbn: DataStore.sbn) {
+            System.out.println("Nama Surat Berharga Negara: " + sbn.getName());
+            System.out.println("Interest rate: " + sbn.getInterestRate());
+            System.out.println("Tanggal jatuh tempo: " + sbn.getTanggalJatuhTempo());
+            System.out.println("Jangka waktu: " + sbn.getJangkaWaktu());
+            System.out.println("Jumlah kuota nasiona;: " + sbn.getKuotaNasional());
+        }
+    }
+
     public void customerSBNMenu(Customer customer) {
         int choice;
 
