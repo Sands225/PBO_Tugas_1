@@ -14,4 +14,24 @@ public class SBN {
         this.tanggalJatuhTempo = tanggalJatuhTempo;
         this.kuotaNasional = kuotaNasional;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public double getInterestRate() {
+        return interestRate;
+    }
+
+    public int getJangkaWaktu() {
+        return jangkaWaktu;
+    }
+
+    public String getTanggalJatuhTempo() {
+        return tanggalJatuhTempo;
+    }
+
+    public int getKuotaNasional() {
+        return kuotaNasional;
+    }
 }
