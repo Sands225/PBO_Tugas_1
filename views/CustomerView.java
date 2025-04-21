@@ -160,5 +160,8 @@ public class CustomerView {
             CustomerSaham newCustomerSaham = new CustomerSaham(customer.getName(), sahamToBuy, quantity);
             DataStore.customerSaham.add(newCustomerSaham);
         }
+
+        System.out.println("Saham berhasil ditambahkan!");
+        customerMenu(customer);
     }
 }
