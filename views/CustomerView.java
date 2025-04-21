@@ -70,7 +70,7 @@ public class CustomerView {
                     customerSellSaham(customer);
                     break;
                 case 2:
-//                    customerBuySaham(customer);
+                    customerBuySaham(customer);
                     break;
                 case 3:
                     View view = new View();
@@ -127,6 +127,38 @@ public class CustomerView {
             sahamService.customerSellSaham(sahamCode, quantity, customer);
             customerMenu(customer);
             return;
+        }
+    }
+
+    public void customerBuySaham(Customer customer) {
+        showAllAvailableSaham();
+        String sahamCode = input.inputNextLine("Masukkan kode saham: ");
+        Saham sahamToBuy = sahamService.getSahamByCode(sahamCode);
+
+        if (sahamToBuy == null) {
+            System.out.println("Kode saham tidak ditemukan.");
+            return;
+        }
+
+        double quantity = input.inputNextDouble("Masukkan jumlah saham yang ingin dibeli: ");
+        if (quantity <= 0) {
+            System.out.println("Jumlah saham harus lebih dari 0.");
+            return;
+        }
+
+        boolean isSahamExists = false;
+
+        for (CustomerSaham customerSaham : DataStore.customerSaham) {
+            if (customerSaham.getSaham().getCode().equals(sahamCode)) {
+                customerSaham.setQuantity(customerSaham.getQuantity() + quantity);
+                isSahamExists = true;
+                break;
+            }
+        }
+
+        if (!isSahamExists) {
+            CustomerSaham newCustomerSaham = new CustomerSaham(customer.getName(), sahamToBuy, quantity);
+            DataStore.customerSaham.add(newCustomerSaham);
         }
     }
 }
