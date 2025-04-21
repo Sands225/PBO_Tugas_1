@@ -34,4 +34,8 @@ public class SBN {
     public int getKuotaNasional() {
         return kuotaNasional;
     }
+
+    public void setKuotaNaisonal(int kuotaNasional) {
+        this.kuotaNasional = kuotaNasional;
+    }
 }
