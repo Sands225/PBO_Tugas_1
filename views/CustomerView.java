@@ -187,14 +187,27 @@ public class CustomerView {
             System.out.println("Interest rate: " + sbn.getInterestRate());
             System.out.println("Tanggal jatuh tempo: " + sbn.getTanggalJatuhTempo());
             System.out.println("Jangka waktu: " + sbn.getJangkaWaktu());
-            System.out.println("Jumlah kuota nasiona;: " + sbn.getKuotaNasional());
+            System.out.println("Jumlah kuota nasional: " + sbn.getKuotaNasional());
+        }
+    }
+
+    public void showAllCustomerSBN(Customer customer) {
+        for (CustomerSBN customerSBN: DataStore.customerSBN) {
+            if (customerSBN.getCustomerName().equals(customer.getName())) {
+                System.out.println("Nama Surat Berharga Negara: " + customerSBN.getSBN().getName());
+                System.out.println("Interest rate: " + customerSBN.getSBN().getInterestRate());
+                System.out.println("Tanggal jatuh tempo: " + customerSBN.getSBN().getTanggalJatuhTempo());
+                System.out.println("Jangka waktu: " + customerSBN.getSBN().getJangkaWaktu());
+                System.out.println("Jumlah kuota nasional: " + customerSBN.getSBN().getKuotaNasional());
+                System.out.println("Jumlah nominal investasi: " + customerSBN.getNominalInvestasi());
+            };
         }
     }
 
     public void customerSBNMenu(Customer customer) {
         int choice;
 
-        showAllSBN();
+        showAllCustomerSBN(customer);
         do {
             System.out.println("1. Beli Surat Berharga Negara");
             System.out.println("2. Simulasi Surat Berharga Negara");
@@ -206,12 +219,16 @@ public class CustomerView {
                     customerBuySBN(customer);
                     break;
                 case 2:
-                    customerSBNSimulation(customer);
+//                    customerSBNSimulation(customer);
                     break;
                 case 3:
                     View view = new View();
                     view.mainView();
             }
         } while (choice < 1 || choice > 3);
+    }
+
+    public void customerBuySBN(Customer customer) {
+
     }
 }
