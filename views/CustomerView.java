@@ -22,7 +22,7 @@ public class CustomerView {
                     customerSahamMenu(customer);
                     break;
                 case 2:
-//                    customerSBNMenu(customer);
+                    customerSBNMenu(customer);
                     break;
                 case 3:
                     View view = new View();
@@ -61,7 +61,7 @@ public class CustomerView {
         do {
             System.out.println("1. Jual Saham");
             System.out.println("2. Beli Saham");
-            System.out.println("3. Kelar");
+            System.out.println("3. Keluar");
             choice = input.inputNextInt("Masukkan pilihan Anda: ");
 
             switch (choice) {
@@ -179,5 +179,29 @@ public class CustomerView {
             customerMenu(customer);
             return;
         }
+    }
+
+    public void customerSBNMenu(Customer customer) {
+        int choice;
+
+        showAllSBN();
+        do {
+            System.out.println("1. Beli Surat Berharga Negara");
+            System.out.println("2. Simulasi Surat Berharga Negara");
+            System.out.println("3. Keluar");
+            choice = input.inputNextInt("Masukkan pilihan Anda: ");
+
+            switch (choice) {
+                case 1:
+                    customerBuySBN(customer);
+                    break;
+                case 2:
+                    customerSBNSimulation(customer);
+                    break;
+                case 3:
+                    View view = new View();
+                    view.mainView();
+            }
+        } while (choice < 1 || choice > 3);
     }
 }
