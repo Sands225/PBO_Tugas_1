@@ -4,7 +4,6 @@ import data.DataStore;
 import models.*;
 import services.SahamService;
 import utils.Input;
-import views.View;
 
 public class CustomerView {
     private final Input input = new Input();
@@ -110,7 +109,10 @@ public class CustomerView {
 
             if (custSaham == null) {
                 System.out.println("Kode saham tidak ditemukan di portofolio Anda.");
-                if (!retry()) return;
+                if (!retry()) {
+                    customerMenu(customer);
+                    return;
+                }
                 continue;
             }
 
@@ -120,7 +122,10 @@ public class CustomerView {
             if (!qtyStatus) {
                 System.out.printf("Jumlah saham tidak mencukupi. Anda hanya memiliki %.2f saham %s.\n",
                         custSaham.getQuantity(), custSaham.getSaham().getCode());
-                if (!retry()) return;
+                if (!retry()) {
+                    customerMenu(customer);
+                    return;
+                }
                 continue;
             }
 
@@ -131,37 +136,48 @@ public class CustomerView {
     }
 
     public void customerBuySaham(Customer customer) {
-        showAllAvailableSaham();
-        String sahamCode = input.inputNextLine("Masukkan kode saham: ");
-        Saham sahamToBuy = sahamService.getSahamByCode(sahamCode);
+        while (true) {
+            showAllAvailableSaham();
+            String sahamCode = input.inputNextLine("Masukkan kode saham: ");
+            Saham sahamToBuy = sahamService.getSahamByCode(sahamCode);
 
-        if (sahamToBuy == null) {
-            System.out.println("Kode saham tidak ditemukan.");
-            return;
-        }
-
-        double quantity = input.inputNextDouble("Masukkan jumlah saham yang ingin dibeli: ");
-        if (quantity <= 0) {
-            System.out.println("Jumlah saham harus lebih dari 0.");
-            return;
-        }
-
-        boolean isSahamExists = false;
-
-        for (CustomerSaham customerSaham : DataStore.customerSaham) {
-            if (customerSaham.getSaham().getCode().equals(sahamCode)) {
-                customerSaham.setQuantity(customerSaham.getQuantity() + quantity);
-                isSahamExists = true;
-                break;
+            if (sahamToBuy == null) {
+                System.out.println("Kode saham tidak ditemukan.");
+                if (!retry()) {
+                    customerMenu(customer);
+                    return;
+                }
+                continue;
             }
-        }
 
-        if (!isSahamExists) {
-            CustomerSaham newCustomerSaham = new CustomerSaham(customer.getName(), sahamToBuy, quantity);
-            DataStore.customerSaham.add(newCustomerSaham);
-        }
+            double quantity = input.inputNextDouble("Masukkan jumlah saham yang ingin dibeli: ");
+            if (quantity <= 0) {
+                System.out.println("Jumlah saham harus lebih dari 0.");
+                if (!retry()) {
+                    customerMenu(customer);
+                    return;
+                }
+                continue;
+            }
 
-        System.out.println("Saham berhasil ditambahkan!");
-        customerMenu(customer);
+            boolean isSahamExists = false;
+
+            for (CustomerSaham customerSaham : DataStore.customerSaham) {
+                if (customerSaham.getSaham().getCode().equals(sahamCode)) {
+                    customerSaham.setQuantity(customerSaham.getQuantity() + quantity);
+                    isSahamExists = true;
+                    break;
+                }
+            }
+
+            if (!isSahamExists) {
+                CustomerSaham newCustomerSaham = new CustomerSaham(customer.getName(), sahamToBuy, quantity);
+                DataStore.customerSaham.add(newCustomerSaham);
+            }
+
+            System.out.println("Saham berhasil ditambahkan!");
+            customerMenu(customer);
+            return;
+        }
     }
 }
