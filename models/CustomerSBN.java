@@ -22,4 +22,8 @@ public class CustomerSBN {
     public double getNominalInvestasi() {
         return nominalInvestasi;
     }
+
+    public void setNominalInvestasi(double nominalInvestasi) {
+        this.nominalInvestasi = nominalInvestasi;
+    }
 }
