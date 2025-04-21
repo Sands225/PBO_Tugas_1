@@ -3,7 +3,10 @@ package views;
 import data.DataStore;
 import models.*;
 import services.SahamService;
+import services.SBNService;
 import utils.Input;
+
+import javax.xml.crypto.Data;
 
 public class CustomerView {
     private final Input input = new Input();
@@ -229,6 +232,57 @@ public class CustomerView {
     }
 
     public void customerBuySBN(Customer customer) {
+        while (true) {
+            showAllSBN();
+            String sbnName = input.inputNextLine("Masukkan nama SBN: ");
+            SBN sbnToBuy = sbnService.getSBNByName(sbnName);
 
+            if (sbnToBuy == null) {
+                System.out.println("❌ Nama SBN tidak ditemukan.");
+                if (!retry()) {
+                    customerSBNMenu(customer);
+                    return;
+                }
+                continue;
+            }
+
+            double nominal = input.inputNextDouble("Masukkan jumlah nominal pembelian SBN: ");
+            if (nominal <= 0) {
+                System.out.println("❌ Nominal harus lebih dari 0.");
+                if (!retry()) {
+                    customerSBNMenu(customer);
+                    return;
+                }
+                continue;
+            }
+
+            if (nominal > sbnToBuy.getKuotaNasional()) {
+                System.out.printf("❌ Kuota tidak mencukupi. Maksimum pembelian: %.2f\n", sbnToBuy.getKuotaNasional());
+                if (!retry()) {
+                    customerSBNMenu(customer);
+                    return;
+                }
+                continue;
+            }
+
+            sbnToBuy.setKuotaNasional(sbnToBuy.getKuotaNasional() - nominal);
+
+            boolean found = false;
+            for (CustomerSBN customerSBN : DataStore.customerSBN) {
+                if (customerSBN.getSBN().getName().equals(sbnName)) {
+                    customerSBN.setNominalInvestasi(customerSBN.getNominalInvestasi() + nominal);
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found) {
+                CustomerSBN newCustomerSBN = new CustomerSBN(customer.getName(), sbnToBuy, nominal);
+                DataStore.customerSBN.add(newCustomerSBN);
+            }
+
+            System.out.printf("✅ Berhasil membeli SBN %s sebesar %.2f\n", sbnName, nominal);
+            break;
+        }
     }
 }
