@@ -326,4 +326,14 @@ public class CustomerView {
 
         customerSBNSimulation(customer);
     }
+
+    public void customerPortofolio(Customer customer) {
+        System.out.println("Saham yang Anda miliki: ");
+        showAllCustomerSaham(customer);
+
+        System.out.println("Surat Berharga Negara yang Anda miliki: ");
+        showAllCustomerSBN(customer);
+
+        customerMenu(customer);
+    }
 }
