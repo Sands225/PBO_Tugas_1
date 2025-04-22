@@ -223,7 +223,7 @@ public class CustomerView {
                     customerBuySBN(customer);
                     break;
                 case 2:
-//                    customerSBNSimulation(customer);
+                    customerSBNSimulation(customer);
                     break;
                 case 3:
                     View view = new View();
@@ -274,6 +274,39 @@ public class CustomerView {
             }
 
             System.out.printf("✅ Berhasil membeli SBN %s sebesar %.2f\n", sbnName, nominal);
+            break;
+        }
+    }
+
+    public void customerSBNSimulation(Customer customer) {
+        while (true) {
+            showAllSBN();
+            String sbnName = input.inputNextLine("Masukkan nama SBN: ");
+            SBN sbnToSimulate = sbnService.getSBNByName(sbnName);
+
+            if (sbnToSimulate == null) {
+                System.out.println("❌ Nama SBN tidak ditemukan.");
+                if (!retry()) {
+                    customerSBNMenu(customer);
+                    return;
+                }
+                continue;
+            }
+
+            double nominal = input.inputNextDouble("Masukkan jumlah nominal SBN: ");
+            boolean isNominalValid = sbnService.checkNominalInvestasi(sbnToSimulate, nominal);
+
+            if (!isNominalValid) {
+                System.out.println("Nominal tidak boleh melebihi kuota nasional");
+                if (!retry()) {
+                    customerSBNMenu(customer);
+                    return;
+                }
+                continue;
+            }
+
+            sbnService.simulatesBN(sbnName, nominal);
+//            System.out.printf("✅ Berhasil membeli SBN %s sebesar %.2f\n", sbnName, nominal);
             break;
         }
     }
