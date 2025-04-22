@@ -239,7 +239,7 @@ public class CustomerView {
             SBN sbnToBuy = sbnService.getSBNByName(sbnName);
 
             if (sbnToBuy == null) {
-                System.out.println("❌ Nama SBN tidak ditemukan.");
+                System.out.println("Nama SBN tidak ditemukan.");
                 if (!retry()) {
                     customerSBNMenu(customer);
                     return;
@@ -273,7 +273,7 @@ public class CustomerView {
                 DataStore.customerSBN.add(newCustomerSBN);
             }
 
-            System.out.printf("✅ Berhasil membeli SBN %s sebesar %.2f\n", sbnName, nominal);
+            System.out.printf("Berhasil membeli SBN %s sebesar %.2f\n", sbnName, nominal);
             break;
         }
     }
@@ -285,7 +285,7 @@ public class CustomerView {
             SBN sbnToSimulate = sbnService.getSBNByName(sbnName);
 
             if (sbnToSimulate == null) {
-                System.out.println("❌ Nama SBN tidak ditemukan.");
+                System.out.println("Nama SBN tidak ditemukan.");
                 if (!retry()) {
                     customerSBNMenu(customer);
                     return;
@@ -305,9 +305,22 @@ public class CustomerView {
                 continue;
             }
 
-            sbnService.simulateSBN(sbnName, nominal);
-//            System.out.printf("✅ Berhasil membeli SBN %s sebesar %.2f\n", sbnName, nominal);
+            double totalInterest = sbnService.calculateInterest(sbnToSimulate, nominal);
+            System.out.println("=====================================================");
+            System.out.println("| Hasil Simulasi Investasi SBN:                     |");
+            System.out.println("|---------------------------------------------------|");
+            System.out.printf("| Nama SBN           : %-30s", sbnToSimulate.getName());
+            System.out.printf("| Nominal Investasi  : Rp. %-27s", String.format("%,.2f", nominal));
+            System.out.printf("| Suku Bunga         : %-30s", String.format("%.2f", sbnToSimulate.getInterestRate() * 100) + "% per bulan");
+            System.out.printf("| Jangka Waktu       : %-30s", sbnToSimulate.getJangkaWaktu() + " bulan)");
+            System.out.printf("| Tanggal Jatuh Tempo: %-30s", sbnToSimulate.getTanggalJatuhTempo());
+            System.out.println("| --------------------------------------------------");
+            System.out.printf("| Kupon per Bulan    : Rp. %-27s", String.format("%,.2f", totalInterest));
+            System.out.printf("| Total Bunga        : Rp. %-27s", String.format("%,.2f", totalInterest * sbnToSimulate.getJangkaWaktu()));
+            System.out.println("==================================================");
             break;
         }
+
+        customerSBNSimulation(customer);
     }
 }
