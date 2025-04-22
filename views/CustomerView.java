@@ -305,7 +305,7 @@ public class CustomerView {
                 continue;
             }
 
-            sbnService.simulatesBN(sbnName, nominal);
+            sbnService.simulateSBN(sbnName, nominal);
 //            System.out.printf("✅ Berhasil membeli SBN %s sebesar %.2f\n", sbnName, nominal);
             break;
         }
