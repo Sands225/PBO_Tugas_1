@@ -18,7 +18,8 @@ public class CustomerView {
         do {
             System.out.println("1. Saham");
             System.out.println("2. SBN");
-            System.out.println("3. Logout");
+            System.out.println("3. Portofolio");
+            System.out.println("4. Logout");
             choice = input.inputNextInt("Masukkan pilihan Anda: ");
 
             switch (choice) {
@@ -29,6 +30,8 @@ public class CustomerView {
                     customerSBNMenu(customer);
                     break;
                 case 3:
+                    customerPortofolio(customer);
+                case 4:
                     View view = new View();
                     view.mainView();
             }
