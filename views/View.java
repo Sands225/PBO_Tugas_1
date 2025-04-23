@@ -27,7 +27,6 @@ public class View {
                     return;
                 default:
                     System.out.println("Pilihan tidak valid! Coba kembali");
-//                    mainView();
             }
         } while (choice < 1 || choice > 3);
     }
@@ -42,5 +41,11 @@ public class View {
 
             isLoggedIn = authService.loginHandler(inputName, inputPassword);
         }
+    }
+
+    public void greet(String username) {
+        System.out.println("===================================================");
+        System.out.printf("|         Selamat Datang, %-20s    |\n", username);
+        System.out.println("===================================================");
     }
 }
