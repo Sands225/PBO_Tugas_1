@@ -1,12 +1,14 @@
 package models;
 
 public class CustomerSBN {
-    String customerName;
-    SBN sbn;
+    private String customerName;
+    private SBN sbn;
+    private double nominalInvestasi;
 
-    public CustomerSBN(String customerName, SBN sbn) {
+    public CustomerSBN(String customerName, SBN sbn, double nominalInvestasi) {
         this.customerName = customerName;
         this.sbn = sbn;
+        this.nominalInvestasi = nominalInvestasi;
     }
 
     public String getCustomerName() {
@@ -15,5 +17,13 @@ public class CustomerSBN {
 
     public SBN getSBN() {
         return sbn;
+    }
+
+    public double getNominalInvestasi() {
+        return nominalInvestasi;
+    }
+
+    public void setNominalInvestasi(double nominalInvestasi) {
+        this.nominalInvestasi = nominalInvestasi;
     }
 }

@@ -3,18 +3,23 @@ package views;
 import data.DataStore;
 import models.*;
 import services.SahamService;
+import services.SBNService;
 import utils.Input;
+
+import javax.xml.crypto.Data;
 
 public class CustomerView {
     private final Input input = new Input();
     private final SahamService sahamService = new SahamService();
+    private final SBNService sbnService = new SBNService();
 
     public void customerMenu(Customer customer) {
         int choice;
         do {
             System.out.println("1. Saham");
             System.out.println("2. SBN");
-            System.out.println("3. Logout");
+            System.out.println("3. Portofolio");
+            System.out.println("4. Logout");
             choice = input.inputNextInt("Masukkan pilihan Anda: ");
 
             switch (choice) {
@@ -22,9 +27,11 @@ public class CustomerView {
                     customerSahamMenu(customer);
                     break;
                 case 2:
-//                    customerSBNMenu(customer);
+                    customerSBNMenu(customer);
                     break;
                 case 3:
+                    customerPortofolio(customer);
+                case 4:
                     View view = new View();
                     view.mainView();
             }
@@ -61,7 +68,7 @@ public class CustomerView {
         do {
             System.out.println("1. Jual Saham");
             System.out.println("2. Beli Saham");
-            System.out.println("3. Kelar");
+            System.out.println("3. Keluar");
             choice = input.inputNextInt("Masukkan pilihan Anda: ");
 
             switch (choice) {
@@ -179,5 +186,154 @@ public class CustomerView {
             customerMenu(customer);
             return;
         }
+    }
+
+    public void showAllSBN() {
+        for(SBN sbn: DataStore.sbn) {
+            System.out.println("Nama Surat Berharga Negara: " + sbn.getName());
+            System.out.println("Interest rate: " + sbn.getInterestRate());
+            System.out.println("Tanggal jatuh tempo: " + sbn.getTanggalJatuhTempo());
+            System.out.println("Jangka waktu: " + sbn.getJangkaWaktu());
+            System.out.println("Jumlah kuota nasional: " + sbn.getKuotaNasional());
+        }
+    }
+
+    public void showAllCustomerSBN(Customer customer) {
+        for (CustomerSBN customerSBN: DataStore.customerSBN) {
+            if (customerSBN.getCustomerName().equals(customer.getName())) {
+                System.out.println("Nama Surat Berharga Negara: " + customerSBN.getSBN().getName());
+                System.out.println("Interest rate: " + customerSBN.getSBN().getInterestRate());
+                System.out.println("Tanggal jatuh tempo: " + customerSBN.getSBN().getTanggalJatuhTempo());
+                System.out.println("Jangka waktu: " + customerSBN.getSBN().getJangkaWaktu());
+                System.out.println("Jumlah kuota nasional: " + customerSBN.getSBN().getKuotaNasional());
+                System.out.println("Jumlah nominal investasi: " + customerSBN.getNominalInvestasi());
+            };
+        }
+    }
+
+    public void customerSBNMenu(Customer customer) {
+        int choice;
+
+        showAllCustomerSBN(customer);
+        do {
+            System.out.println("1. Beli Surat Berharga Negara");
+            System.out.println("2. Simulasi Surat Berharga Negara");
+            System.out.println("3. Keluar");
+            choice = input.inputNextInt("Masukkan pilihan Anda: ");
+
+            switch (choice) {
+                case 1:
+                    customerBuySBN(customer);
+                    break;
+                case 2:
+                    customerSBNSimulation(customer);
+                    break;
+                case 3:
+                    View view = new View();
+                    view.mainView();
+            }
+        } while (choice < 1 || choice > 3);
+    }
+
+    public void customerBuySBN(Customer customer) {
+        while (true) {
+            showAllSBN();
+            String sbnName = input.inputNextLine("Masukkan nama SBN: ");
+            SBN sbnToBuy = sbnService.getSBNByName(sbnName);
+
+            if (sbnToBuy == null) {
+                System.out.println("Nama SBN tidak ditemukan.");
+                if (!retry()) {
+                    customerSBNMenu(customer);
+                    return;
+                }
+                continue;
+            }
+
+            double nominal = input.inputNextDouble("Masukkan jumlah nominal pembelian SBN: ");
+            boolean isNominalValid = sbnService.checkNominalInvestasi(sbnToBuy, nominal);
+
+            if (!isNominalValid) {
+                if (!retry()) {
+                    customerSBNMenu(customer);
+                    return;
+                }
+                continue;
+            }
+            sbnToBuy.setKuotaNasional(sbnToBuy.getKuotaNasional() - nominal);
+
+            boolean found = false;
+            for (CustomerSBN customerSBN : DataStore.customerSBN) {
+                if (customerSBN.getSBN().getName().equals(sbnName)) {
+                    customerSBN.setNominalInvestasi(customerSBN.getNominalInvestasi() + nominal);
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found) {
+                CustomerSBN newCustomerSBN = new CustomerSBN(customer.getName(), sbnToBuy, nominal);
+                DataStore.customerSBN.add(newCustomerSBN);
+            }
+
+            System.out.printf("Berhasil membeli SBN %s sebesar %.2f\n", sbnName, nominal);
+            break;
+        }
+    }
+
+    public void customerSBNSimulation(Customer customer) {
+        while (true) {
+            showAllSBN();
+            String sbnName = input.inputNextLine("Masukkan nama SBN: ");
+            SBN sbnToSimulate = sbnService.getSBNByName(sbnName);
+
+            if (sbnToSimulate == null) {
+                System.out.println("Nama SBN tidak ditemukan.");
+                if (!retry()) {
+                    customerSBNMenu(customer);
+                    return;
+                }
+                continue;
+            }
+
+            double nominal = input.inputNextDouble("Masukkan jumlah nominal SBN: ");
+            boolean isNominalValid = sbnService.checkNominalInvestasi(sbnToSimulate, nominal);
+
+            if (!isNominalValid) {
+                System.out.println("Nominal tidak boleh melebihi kuota nasional");
+                if (!retry()) {
+                    customerSBNMenu(customer);
+                    return;
+                }
+                continue;
+            }
+
+            double totalInterest = sbnService.calculateInterest(sbnToSimulate, nominal);
+            System.out.println("=====================================================");
+            System.out.println("| Hasil Simulasi Investasi SBN:                     |");
+            System.out.println("|---------------------------------------------------|");
+            System.out.printf("| Nama SBN           : %-30s", sbnToSimulate.getName());
+            System.out.printf("| Nominal Investasi  : Rp. %-27s", String.format("%,.2f", nominal));
+            System.out.printf("| Suku Bunga         : %-30s", String.format("%.2f", sbnToSimulate.getInterestRate() * 100) + "% per bulan");
+            System.out.printf("| Jangka Waktu       : %-30s", sbnToSimulate.getJangkaWaktu() + " bulan)");
+            System.out.printf("| Tanggal Jatuh Tempo: %-30s", sbnToSimulate.getTanggalJatuhTempo());
+            System.out.println("| --------------------------------------------------");
+            System.out.printf("| Kupon per Bulan    : Rp. %-27s", String.format("%,.2f", totalInterest));
+            System.out.printf("| Total Bunga        : Rp. %-27s", String.format("%,.2f", totalInterest * sbnToSimulate.getJangkaWaktu()));
+            System.out.println("==================================================");
+            break;
+        }
+
+        customerSBNSimulation(customer);
+    }
+
+    public void customerPortofolio(Customer customer) {
+        System.out.println("Saham yang Anda miliki: ");
+        showAllCustomerSaham(customer);
+
+        System.out.println("Surat Berharga Negara yang Anda miliki: ");
+        showAllCustomerSBN(customer);
+
+        customerMenu(customer);
     }
 }
