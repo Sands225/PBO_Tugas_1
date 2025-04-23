@@ -312,14 +312,14 @@ public class CustomerView {
             System.out.println("=====================================================");
             System.out.println("| Hasil Simulasi Investasi SBN:                     |");
             System.out.println("|---------------------------------------------------|");
-            System.out.printf("| Nama SBN           : %-30s", sbnToSimulate.getName());
-            System.out.printf("| Nominal Investasi  : Rp. %-27s", String.format("%,.2f", nominal));
-            System.out.printf("| Suku Bunga         : %-30s", String.format("%.2f", sbnToSimulate.getInterestRate() * 100) + "% per bulan");
-            System.out.printf("| Jangka Waktu       : %-30s", sbnToSimulate.getJangkaWaktu() + " bulan)");
-            System.out.printf("| Tanggal Jatuh Tempo: %-30s", sbnToSimulate.getTanggalJatuhTempo());
+            System.out.printf("| Nama SBN           : %-30s |\n", sbnToSimulate.getName());
+            System.out.printf("| Nominal Investasi  : Rp. %-27s |\n", String.format("%,.2f", nominal));
+            System.out.printf("| Suku Bunga         : %-30s %% per bulan |\n", String.format("%.2f", sbnToSimulate.getInterestRate() * 100));
+            System.out.printf("| Jangka Waktu       : %-30s bulan |\n", sbnToSimulate.getJangkaWaktu() );
+            System.out.printf("| Tanggal Jatuh Tempo: %-30s |\n", sbnToSimulate.getTanggalJatuhTempo());
             System.out.println("| --------------------------------------------------");
-            System.out.printf("| Kupon per Bulan    : Rp. %-27s", String.format("%,.2f", totalInterest));
-            System.out.printf("| Total Bunga        : Rp. %-27s", String.format("%,.2f", totalInterest * sbnToSimulate.getJangkaWaktu()));
+            System.out.printf("| Kupon per Bulan    : Rp. %-27s |\n", String.format("%,.2f", totalInterest));
+            System.out.printf("| Total Bunga        : Rp. %-27s |\n", String.format("%,.2f", totalInterest * sbnToSimulate.getJangkaWaktu()));
             System.out.println("==================================================");
             break;
         }
