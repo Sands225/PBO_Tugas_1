@@ -12,7 +12,7 @@ public class View {
         do {
             System.out.println("===================================================");
             System.out.println("|    Investasi Saham dan Surat Berharga Negara    |");
-            System.out.println("===================================================");
+            System.out.println("|=================================================|");
             System.out.println("| [1] Login                                       |");
             System.out.println("| [2] Keluar dari Program                         |");
             System.out.println("===================================================");
@@ -26,7 +26,7 @@ public class View {
                     System.out.println("Terima kasih telah menggunakan program kami!");
                     return;
                 default:
-                    System.out.println("Pilihan tidak valid! Coba kembali");
+                    System.out.println("Pilihan tidak valid! Coba lagi");
             }
         } while (true);
     }
@@ -43,7 +43,7 @@ public class View {
         }
     }
 
-    public void greet(String username) {
+    public void greetUser(String username) {
         System.out.println("===================================================");
         System.out.printf("|         Selamat Datang, %-20s    |\n", username);
         System.out.println("===================================================");
