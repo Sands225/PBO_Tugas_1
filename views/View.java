@@ -28,7 +28,7 @@ public class View {
                 default:
                     System.out.println("Pilihan tidak valid! Coba kembali");
             }
-        } while (choice < 1 || choice > 3);
+        } while (true);
     }
 
     public void loginView() {
