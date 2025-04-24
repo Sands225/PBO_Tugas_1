@@ -4,9 +4,7 @@ import data.DataStore;
 import models.*;
 import services.SahamService;
 import services.SBNService;
-import utils.Input;
-
-import javax.xml.crypto.Data;
+import utils.*;
 
 public class CustomerView {
     private final Input input = new Input();
@@ -16,10 +14,14 @@ public class CustomerView {
     public void customerMenu(Customer customer) {
         int choice;
         do {
-            System.out.println("1. Saham");
-            System.out.println("2. SBN");
-            System.out.println("3. Portofolio");
-            System.out.println("4. Logout");
+            System.out.println("===================================================");
+            System.out.println("|                  Customer Menu                  |");
+            System.out.println("|=================================================|");
+            System.out.println("| 1. Saham                                        |");
+            System.out.println("| 2. SBN                                          |");
+            System.out.println("| 3. Portofolio                                   |");
+            System.out.println("| 4. Logout                                       |");
+            System.out.println("===================================================");
             choice = input.inputNextInt("Masukkan pilihan Anda: ");
 
             switch (choice) {
@@ -39,13 +41,19 @@ public class CustomerView {
     }
 
     public void showAllCustomerSaham(Customer customer) {
-        System.out.println("Saham yang Anda miliki: ");
+        int count = 0;
+
+        System.out.println("===================================================");
+        System.out.println("|             Saham yang Anda miliki              |");
+        System.out.println("|=================================================|");
         for (CustomerSaham customerSaham: DataStore.customerSaham) {
             if(customerSaham.getCustomerName().equals(customer.getName())) {
-                System.out.println("Kode saham: " + customerSaham.getSaham().getCode());
-                System.out.println("Jumlah saham: " + customerSaham.getQuantity());
+                count++;
+                System.out.printf("| %2d | Kode saham  : %-31s|\n", count, customerSaham.getSaham().getCode());
+                System.out.printf("|    | Jumlah saham: %-29s|\n", String.format("%,.2f", customerSaham.getQuantity()));
             }
         }
+        System.out.println("===================================================");
     }
 
     public void showAllAvailableSaham() {
