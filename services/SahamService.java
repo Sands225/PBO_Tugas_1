@@ -6,7 +6,7 @@ import models.Saham;
 import data.DataStore;
 
 public class SahamService {
-    public CustomerSaham checkCustomerSahamCode(String sahamCode) {
+    public CustomerSaham getCustomerSahamBySahamCode(String sahamCode) {
         for (CustomerSaham customerSaham: DataStore.customerSaham) {
             if (customerSaham.getSaham().getCode().equals(sahamCode)) {
                 return customerSaham;
@@ -19,27 +19,35 @@ public class SahamService {
         return inputQuantity > 0 && inputQuantity <= custSahamQuantity;
     }
 
-    public void customerSellSaham(String sahamCode, double sahamQuantity, Customer customer) {
+    public boolean customerSellSaham(String sahamCode, double sahamQuantity) {
         CustomerSaham toRemove = null;
 
-        for (CustomerSaham customerSaham: DataStore.customerSaham) {
+        for (CustomerSaham customerSaham : DataStore.customerSaham) {
             if (customerSaham.getSaham().getCode().equals(sahamCode)) {
                 customerSaham.setQuantity(customerSaham.getQuantity() - sahamQuantity);
 
-                System.out.println("Selamat! Anda berhasil menjual " + sahamQuantity + " saham " + sahamCode);
-
-                if (customerSaham.getQuantity() > 0) {
-                    System.out.printf("Sisa saham Anda di %s: %.2f lembar\n", sahamCode, customerSaham.getQuantity());
-                } else {
+                if (customerSaham.getQuantity() <= 0) {
                     toRemove = customerSaham;
                 }
+                break;
             }
         }
 
         if (toRemove != null) {
             DataStore.customerSaham.remove(toRemove);
-            System.out.println("Anda sudah tidak memiliki saham " + sahamCode + " di portofolio Anda.");
+            return true;
         }
+
+        return false;
+    }
+
+    public double getRemainingQuantity(String sahamCode) {
+        for (CustomerSaham customerSaham : DataStore.customerSaham) {
+            if (customerSaham.getSaham().getCode().equals(sahamCode)) {
+                return customerSaham.getQuantity();
+            }
+        }
+        return 0;
     }
 
     public Saham getSahamByCode(String sahamCode) {
