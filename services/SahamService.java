@@ -41,15 +41,6 @@ public class SahamService {
         return false;
     }
 
-    public double getRemainingQuantity(String sahamCode) {
-        for (CustomerSaham customerSaham : DataStore.customerSaham) {
-            if (customerSaham.getSaham().getCode().equals(sahamCode)) {
-                return customerSaham.getQuantity();
-            }
-        }
-        return 0;
-    }
-
     public Saham getSahamByCode(String sahamCode) {
         for (Saham saham: DataStore.saham) {
             if (saham.getCode().equals(sahamCode)) {
