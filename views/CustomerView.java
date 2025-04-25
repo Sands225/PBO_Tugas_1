@@ -377,10 +377,8 @@ public class CustomerView {
                 continue;
             }
 
-//            double totalInterest = sbnService.calculateInterest(sbnToSimulate, nominal);
-
-            int jangkaWaktu = sbnToSimulate.getJangkaWaktu(); // in months
-            double annualRate = sbnToSimulate.getInterestRate(); // in decimal
+            int jangkaWaktu = sbnToSimulate.getJangkaWaktu();
+            double annualRate = sbnToSimulate.getInterestRate();
             double monthlyRate = annualRate / 12;
             double kuponPerBulan = nominal * monthlyRate;
             double totalInterest = kuponPerBulan * jangkaWaktu;
@@ -396,6 +394,7 @@ public class CustomerView {
             System.out.println("|--------------------------------------------------|");
             System.out.printf("| %-22s : Rp %,-20.2f |\n", "Kupon per Bulan", kuponPerBulan);
             System.out.printf("| %-22s : Rp %,-20.2f |\n", "Total Bunga", totalInterest);
+            System.out.printf("| %-22s : Rp %,-20.2f |\n", "Total Nominal Investasi", nominal + totalInterest);
             System.out.println("====================================================");
 
             break;
