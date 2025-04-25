@@ -62,13 +62,16 @@ public class CustomerView {
     }
 
     public void showAllAvailableSaham() {
+        int count = 0;
+
         System.out.println("===================================================");
         System.out.println("|               Saham yang tersedia               |");
         System.out.println("===================================================");
         for (Saham saham: DataStore.saham) {
-            System.out.printf("| Kode saham : %-30s |\n", saham.getCode());
-            System.out.printf("| Perusahaan : %-30s |\n", saham.getCompany());
-            System.out.printf("| Harga saham: %-30s |\n", String.format("%,.2f", saham.getPrice()));
+            count++;
+            System.out.printf("| %2d | Kode saham : %-29s |\n", count, saham.getCode());
+            System.out.printf("|    | Perusahaan : %-29s |\n", saham.getCompany());
+            System.out.printf("|    | Harga saham: %-29s |\n", String.format("%,.2f", saham.getPrice()));
         }
         System.out.println("===================================================");
     }
@@ -95,7 +98,7 @@ public class CustomerView {
                     customerBuySaham(customer);
                     break;
                 case 3:
-                    customerMenu(customer);
+                    customerSahamMenu(customer);
                 default:
                     System.out.println("Pilihan tidak valid! Silahkan coba lagi.");
             }
@@ -172,7 +175,7 @@ public class CustomerView {
             if (sahamToBuy == null) {
                 System.out.println("Kode saham tidak ditemukan.");
                 if (!retry()) {
-                    customerMenu(customer);
+                    customerSahamMenu(customer);
                     return;
                 }
                 continue;
@@ -182,17 +185,23 @@ public class CustomerView {
             if (quantity <= 0) {
                 System.out.println("Jumlah saham harus lebih dari 0.");
                 if (!retry()) {
-                    customerMenu(customer);
+                    customerSahamMenu(customer);
                     return;
                 }
                 continue;
             }
 
             boolean isSahamExists = false;
+            double currSahamQuantity = -1;
+            String currSahamCode = null;
 
             for (CustomerSaham customerSaham : DataStore.customerSaham) {
                 if (customerSaham.getSaham().getCode().equals(sahamCode)) {
                     customerSaham.setQuantity(customerSaham.getQuantity() + quantity);
+
+                    currSahamCode = customerSaham.getSaham().getCode();
+                    currSahamQuantity = customerSaham.getQuantity();
+
                     isSahamExists = true;
                     break;
                 }
@@ -204,9 +213,15 @@ public class CustomerView {
             }
 
             System.out.println("===================================================");
-            System.out.println("|           Saham berhasil ditambahkan!           |");
+            System.out.println("|            Pembelian Saham Berhasil!            |");
             System.out.println("===================================================");
-            customerMenu(customer);
+            System.out.println("| Detail pembelian Saham:                         |");
+            System.out.printf("| Kode saham : %-34s |\n", currSahamCode);
+            System.out.printf("| Jumlah     : %-34s |\n", String.format("%,.2f", currSahamQuantity));
+            System.out.println("===================================================");
+
+            input.enterToContinue();
+            customerSahamMenu(customer);
             return;
         }
     }
