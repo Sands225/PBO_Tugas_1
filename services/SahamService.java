@@ -49,4 +49,13 @@ public class SahamService {
         }
         return null;
     }
+
+    public double getMarketBySahamCode(String sahamCode) {
+        for (Saham saham: DataStore.saham) {
+            if (saham.getCode().equals(sahamCode)) {
+                return saham.getPrice();
+            }
+        }
+        return -1;
+    }
 }
