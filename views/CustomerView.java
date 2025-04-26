@@ -98,7 +98,7 @@ public class CustomerView {
                     customerBuySaham(customer);
                     break;
                 case 3:
-                    customerSahamMenu(customer);
+                    customerMenu(customer);
                 default:
                     System.out.println("Pilihan tidak valid! Silahkan coba lagi.");
             }
@@ -194,10 +194,12 @@ public class CustomerView {
             boolean isSahamExists = false;
             double currSahamQuantity = -1;
             String currSahamCode = null;
+            double totalPurchase = quantity * sahamToBuy.getPrice();
 
             for (CustomerSaham customerSaham : DataStore.customerSaham) {
                 if (customerSaham.getSaham().getCode().equals(sahamCode)) {
                     customerSaham.setQuantity(customerSaham.getQuantity() + quantity);
+                    customerSaham.setTotalPurchaseValue(customerSaham.getTotalPurchaseValue() + totalPurchase);
 
                     currSahamCode = customerSaham.getSaham().getCode();
                     currSahamQuantity = customerSaham.getQuantity();
@@ -208,7 +210,7 @@ public class CustomerView {
             }
 
             if (!isSahamExists) {
-                CustomerSaham newCustomerSaham = new CustomerSaham(customer.getName(), sahamToBuy, quantity);
+                CustomerSaham newCustomerSaham = new CustomerSaham(customer.getName(), sahamToBuy, quantity, totalPurchase);
                 DataStore.customerSaham.add(newCustomerSaham);
             }
 
@@ -379,9 +381,8 @@ public class CustomerView {
 
             int jangkaWaktu = sbnToSimulate.getJangkaWaktu();
             double annualRate = sbnToSimulate.getInterestRate();
-            double monthlyRate = annualRate / 12;
-            double kuponPerBulan = nominal * monthlyRate;
-            double totalInterest = kuponPerBulan * jangkaWaktu;
+            double monthlyInterest = annualRate * nominal * 0.9 / 12 ;
+            double totalInterest = monthlyInterest * jangkaWaktu;
 
             System.out.println("====================================================");
             System.out.println("|           Hasil Simulasi Investasi SBN           |");
@@ -392,7 +393,7 @@ public class CustomerView {
             System.out.printf("| %-22s : %-23s |\n", "Jangka Waktu", jangkaWaktu + " bulan");
             System.out.printf("| %-22s : %-23s |\n", "Tanggal Jatuh Tempo", sbnToSimulate.getTanggalJatuhTempo());
             System.out.println("|--------------------------------------------------|");
-            System.out.printf("| %-22s : Rp %,-20.2f |\n", "Kupon per Bulan", kuponPerBulan);
+            System.out.printf("| %-22s : Rp %,-20.2f |\n", "Bunga per Bulan", monthlyInterest);
             System.out.printf("| %-22s : Rp %,-20.2f |\n", "Total Bunga", totalInterest);
             System.out.printf("| %-22s : Rp %,-20.2f |\n", "Total Nominal Investasi", nominal + totalInterest);
             System.out.println("====================================================");
@@ -404,12 +405,61 @@ public class CustomerView {
         customerSBNMenu(customer);
     }
 
-    public void customerPortofolio(Customer customer) {
-        System.out.println("Saham yang Anda miliki: ");
-        showAllCustomerSaham(customer);
+    public void showAllDetailCustomerSaham(Customer customer) {
+        int count = 0;
+        double currMarketValue;
 
-        System.out.println("Surat Berharga Negara yang Anda miliki: ");
-        showAllCustomerSBN(customer);
+        System.out.println("===================================================");
+        System.out.println("|             Saham yang Anda miliki              |");
+        System.out.println("|=================================================|");
+        for (CustomerSaham customerSaham: DataStore.customerSaham) {
+            if(customerSaham.getCustomerName().equals(customer.getName())) {
+                currMarketValue = sahamService.getMarketBySahamCode(customerSaham.getSaham().getCode());
+                count++;
+                System.out.printf("| %2d | Kode saham       : %-23s |\n", count, customerSaham.getSaham().getCode());
+                System.out.printf("|    | Jumlah saham     : %,-23.2f |\n", customerSaham.getQuantity());
+                System.out.printf("|    | Nominal Pembelian: %,-23.2f |\n", customerSaham.getTotalPurchaseValue());
+                System.out.printf("|    | Harga saat ini   : %,-23.2f |\n", currMarketValue);
+            }
+        }
+        if (count <= 0) {
+            System.out.println("|        Anda belum memiliki saham apapun!        |");
+        }
+        System.out.println("===================================================");
+    }
+
+    public void showAllDetailCustomerSBN(Customer customer) {
+        int count = 0;
+
+        System.out.println("===================================================");
+        System.out.println("|     Surat Berharga Negara yang Anda miliki      |");
+        System.out.println("===================================================");
+        for (CustomerSBN customerSBN : DataStore.customerSBN) {
+            if (customerSBN.getCustomerName().equals(customer.getName())) {
+                count++;
+
+                double annualRate = customerSBN.getSBN().getInterestRate();
+                double nominal = customerSBN.getNominalInvestasi();
+                double monthlyInterest = annualRate * nominal * 0.9 / 12 ;
+
+                System.out.printf("| %-2d | Nama SBN        : %-24s |\n", count, customerSBN.getSBN().getName());
+                System.out.printf("|    | Bunga (tahun)   : %-24s |\n", String.format("%.2f%%", customerSBN.getSBN().getInterestRate()));
+                System.out.printf("|    | Tanggal tempo   : %-24s |\n", customerSBN.getSBN().getTanggalJatuhTempo());
+                System.out.printf("|    | Jangka waktu    : %-24d |\n", customerSBN.getSBN().getJangkaWaktu());
+                System.out.printf("|    | Nominal         : %,-24.2f |\n", customerSBN.getNominalInvestasi());
+                System.out.printf("|    | Bunga per bulan : %,-24.2f |\n", monthlyInterest);
+            }
+        }
+        if (count == 0) {
+            System.out.println("|           Anda belum memiliki SBN apapun!        |");
+        }
+        System.out.println("===================================================");
+    }
+
+
+    public void customerPortofolio(Customer customer) {
+        showAllDetailCustomerSaham(customer);
+        showAllDetailCustomerSBN(customer);
 
         input.enterToContinue();
         customerMenu(customer);
