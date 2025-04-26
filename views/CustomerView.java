@@ -99,6 +99,7 @@ public class CustomerView {
                     break;
                 case 3:
                     customerMenu(customer);
+                    break;
                 default:
                     System.out.println("Pilihan tidak valid! Silahkan coba lagi.");
             }
@@ -130,8 +131,7 @@ public class CustomerView {
             boolean qtyStatus = sahamService.checkCustomerSahamQuantity(quantity, custSaham.getQuantity());
 
             if (!qtyStatus) {
-                System.out.printf("Jumlah saham tidak mencukupi. Anda hanya memiliki %.2f saham %s.\n",
-                        custSaham.getQuantity(), custSaham.getSaham().getCode());
+                System.out.printf("Jumlah saham tidak mencukupi. Anda hanya memiliki %.2f saham %s.\n", custSaham.getQuantity(), custSaham.getSaham().getCode());
                 if (!retry()) {
                     customerMenu(customer);
                     return;
