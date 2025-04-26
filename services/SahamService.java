@@ -19,28 +19,6 @@ public class SahamService {
         return inputQuantity > 0 && inputQuantity <= custSahamQuantity;
     }
 
-    public boolean customerSellSaham(String sahamCode, double sahamQuantity) {
-        CustomerSaham toRemove = null;
-
-        for (CustomerSaham customerSaham : DataStore.customerSaham) {
-            if (customerSaham.getSaham().getCode().equals(sahamCode)) {
-                customerSaham.setQuantity(customerSaham.getQuantity() - sahamQuantity);
-
-                if (customerSaham.getQuantity() <= 0) {
-                    toRemove = customerSaham;
-                }
-                break;
-            }
-        }
-
-        if (toRemove != null) {
-            DataStore.customerSaham.remove(toRemove);
-            return true;
-        }
-
-        return false;
-    }
-
     public Saham getSahamByCode(String sahamCode) {
         for (Saham saham: DataStore.saham) {
             if (saham.getCode().equals(sahamCode)) {
@@ -57,5 +35,18 @@ public class SahamService {
             }
         }
         return -1;
+    }
+
+    public void addQuantityAndTotalPurchase(CustomerSaham customerSaham, double quantity, double totalPurchase) {
+        customerSaham.setQuantity(customerSaham.getQuantity() + quantity);
+        customerSaham.setTotalPurchaseValue(customerSaham.getTotalPurchaseValue() + totalPurchase);
+    }
+
+    public void subtractCustomerSahamQuantity(CustomerSaham customerSaham, double sahamQuantity) {
+        customerSaham.setQuantity(customerSaham.getQuantity() - sahamQuantity);
+
+        if (customerSaham.getQuantity() <= 0) {
+            DataStore.customerSaham.remove(customerSaham);
+        }
     }
 }
