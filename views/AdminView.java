@@ -58,4 +58,14 @@ public class AdminView {
             }
         } while (choice < 1 || choice > 3);
     }
+
+
+    public void showAllAvailableSaham() {
+        System.out.println("Saham yang tersedia: ");
+        for (Saham saham : DataStore.saham) {
+            System.out.println("Kode saham: " + saham.getCode());
+            System.out.println("Perusahaan: " + saham.getCompany());
+            System.out.println("Harga saham: " + saham.getPrice());
+        }
+    }
 }
