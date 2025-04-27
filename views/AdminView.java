@@ -68,4 +68,26 @@ public class AdminView {
             System.out.println("Harga saham: " + saham.getPrice());
         }
     }
+
+    public void adminSahamMenu() {
+        int choice;
+        do {
+            System.out.println("1. Tambahkan saham");
+            System.out.println("2. Ubah saham");
+            System.out.println("3. Kembali");
+            choice = input.inputNextInt("Masukkan pilihan Anda: ");
+
+            switch (choice) {
+                case 1:
+                    adminAddSaham();
+                    break;
+                case 2:
+                    adminUpdateSaham();
+                    break;
+                case 3:
+                    View view = new View();
+                    view.mainView();
+            }
+        } while (choice < 1 || choice > 3);
+    }
 }
