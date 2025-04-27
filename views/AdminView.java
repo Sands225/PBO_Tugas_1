@@ -1,7 +1,212 @@
 package views;
 
-public class AdminView {
-    public void adminMenu() {
+import data.DataStore;
+import models.*;
+import services.SBNService;
+import services.SahamService;
+import utils.Input;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
+public class AdminView {
+    private final Input input = new Input();
+    private final SahamService sahamService = new SahamService();
+    private final SBNService sbnService = new SBNService();
+
+    private boolean retry() {
+        int choice;
+
+        do {
+            System.out.println("==================================");
+            System.out.println("1. Coba lagi");
+            System.out.println("2. Kembali ke menu sebelumnya");
+            System.out.println("==================================");
+            choice = input.inputNextInt("Masukkan pilihan Anda: ");
+
+            switch (choice) {
+                case 1:
+                    return true;
+                case 2:
+                    return false;
+                default:
+                    System.out.println("Pilihan tidak valid. Silakan pilih 1 atau 2.");
+                    break;
+            }
+        } while (true);
+    }
+
+    public void adminMenu() {
+        int choice;
+        do {
+            System.out.println("1. Saham");
+            System.out.println("2. SBN");
+            System.out.println("3. Logout");
+            choice = input.inputNextInt("Masukkan pilihan Anda: ");
+
+            switch (choice) {
+                case 1:
+                    adminSahamMenu();
+                    break;
+                case 2:
+                    adminSBNMenu();
+                    break;
+                case 3:
+                    View view = new View();
+                    view.mainView();
+            }
+        } while (choice < 1 || choice > 3);
+    }
+
+
+    public void showAllAvailableSaham() {
+        System.out.println("Saham yang tersedia: ");
+        for (Saham saham : DataStore.saham) {
+            System.out.println("Kode saham: " + saham.getCode());
+            System.out.println("Perusahaan: " + saham.getCompany());
+            System.out.println("Harga saham: " + saham.getPrice());
+        }
+    }
+
+    public void adminSahamMenu() {
+        int choice;
+        do {
+            System.out.println("1. Tambahkan saham");
+            System.out.println("2. Ubah saham");
+            System.out.println("3. Kembali");
+            choice = input.inputNextInt("Masukkan pilihan Anda: ");
+
+            switch (choice) {
+                case 1:
+                    adminAddSaham();
+                    break;
+                case 2:
+                    adminUpdateSaham();
+                    break;
+                case 3:
+                    View view = new View();
+                    view.mainView();
+            }
+        } while (choice < 1 || choice > 3);
+    }
+
+    public void adminAddSaham() {
+        while (true) {
+            showAllAvailableSaham();
+
+            String sahamCode = input.inputNextLine("Masukkan kode saham: ");
+            boolean isSahamExists = sahamService.checkSahamAvailability(sahamCode);
+
+            if (isSahamExists) {
+                System.out.println("Saham dengan kode " + sahamCode + " sudah ada!");
+                continue; // allow retry
+            }
+
+            String company = input.inputNextLine("Masukkan nama perusahaan: ");
+            double price = input.inputNextDouble("Masukkan harga saham: ");
+
+            Saham newSaham = new Saham(sahamCode, company, price);
+            DataStore.saham.add(newSaham);
+
+            System.out.println("Saham berhasil ditambahkan!");
+            break;
+        }
+    }
+
+    public void adminUpdateSaham() {
+        showAllAvailableSaham();
+
+        String sahamCode = input.inputNextLine("Masukkan kode saham yang ingin diubah: ");
+        Saham saham = sahamService.getSahamByCode(sahamCode);
+
+        if (saham == null) {
+            System.out.println("Saham dengan kode tersebut tidak ditemukan.");
+            return;
+        }
+
+        double newPrice = input.inputNextDouble("Masukkan harga baru untuk saham " + sahamCode + ": ");
+        saham.setPrice(newPrice);
+
+        System.out.println("Harga saham berhasil diperbarui!");
+    }
+
+    public void adminSBNMenu() {
+        int choice;
+        do {
+            System.out.println("1. Tambahkan SBN");
+            System.out.println("2. Kembali");
+
+            choice = input.inputNextInt("Masukkan pilihan Anda: ");
+
+            switch (choice) {
+                case 1:
+                    adminAddSBN();
+                    break;
+                case 2:
+                    return;
+            }
+        } while (choice < 1 || choice > 2);
+    }
+
+    public void adminAddSBN() {
+        while (true) {
+            String sbnName = input.inputNextLine("Masukkan nama Surat Berharga Negara: ");
+            SBN sbnToAdd = sbnService.getSBNByName(sbnName);
+
+            if (sbnToAdd == null) {
+                System.out.println("Nama SBN tidak ditemukan.");
+                if (!retry()) {
+                    adminSBNMenu();
+                    return;
+                }
+                continue;
+            }
+
+            double bunga = input.inputNextDouble("Masukkan persentase bunga (per tahun): ");
+            if (bunga <= 0) {
+                System.out.println("Persentase bunga harus lebih besar dari 0.");
+                if (!retry()) {
+                    adminSBNMenu();
+                    return;
+                }
+                continue;
+            }
+
+            double jangkaWaktu = input.inputNextInt("Masukkan jangka waktu (tahun): ");
+            if (jangkaWaktu <= 0) {
+                System.out.println("Jangka waktu harus lebih besar dari 0.");
+                if (!retry()) {
+                    adminSBNMenu();
+                    return;
+                }
+                continue;
+            }
+
+            String tanggalJatuhTempo = input.inputNextLine("Masukkan tanggal jatuh tempo (yyyy-mm-dd): ");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            try {
+                LocalDate.parse(tanggalJatuhTempo, formatter);
+                continue;
+            } catch (DateTimeParseException e) {
+                System.out.println("Format tanggal tidak valid. Gunakan yyyy-MM-dd.");
+                if (!retry()) {
+                    adminSBNMenu();
+                    return;
+                }
+            }
+
+            double kuotaNasional = input.inputNextDouble("Masukkan kuota nasional: ");
+            if (kuotaNasional <= 0) {
+                System.out.println("Kuota nasional harus lebih besar dari 0.");
+                if (!retry()) {
+                    adminSBNMenu();
+                    return;
+                }
+                continue;
+            }
+            System.out.println("Surat Berharga Negara berhasil ditambahkan!");
+            adminSBNMenu();
+        }
     }
 }
