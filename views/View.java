@@ -4,7 +4,7 @@ import services.AuthService;
 import utils.Input;
 
 public class View {
-    private Input input = new Input();
+    private static final Input INPUT = new Input();
 
     public void mainView() {
         int choice;
@@ -12,11 +12,11 @@ public class View {
         do {
             System.out.println("===================================================");
             System.out.println("|    Investasi Saham dan Surat Berharga Negara    |");
-            System.out.println("===================================================");
+            System.out.println("|=================================================|");
             System.out.println("| [1] Login                                       |");
             System.out.println("| [2] Keluar dari Program                         |");
             System.out.println("===================================================");
-            choice = input.inputNextInt("Masukkan pilihan Anda: ");
+            choice = INPUT.inputNextInt("Masukkan pilihan Anda: ");
 
             switch(choice) {
                 case 1:
@@ -26,9 +26,9 @@ public class View {
                     System.out.println("Terima kasih telah menggunakan program kami!");
                     return;
                 default:
-                    System.out.println("Pilihan tidak valid! Coba kembali");
+                    System.out.println("Pilihan tidak valid! Coba lagi");
             }
-        } while (choice < 1 || choice > 3);
+        } while (true);
     }
 
     public void loginView() {
@@ -36,16 +36,38 @@ public class View {
         boolean isLoggedIn = false;
 
         while (!isLoggedIn) {
-            String inputName = input.inputNextLine("Masukkan nama: ");
-            String inputPassword = input.inputNextLine("Masukkan password: ");
+            String inputName = INPUT.inputNextLine("Masukkan nama: ");
+            String inputPassword = INPUT.inputNextLine("Masukkan password: ");
 
             isLoggedIn = authService.loginHandler(inputName, inputPassword);
         }
     }
 
-    public void greet(String username) {
+    public void greetUser(String username) {
         System.out.println("===================================================");
         System.out.printf("|         Selamat Datang, %-20s    |\n", username);
         System.out.println("===================================================");
+    }
+
+    public static boolean retry() {
+        int choice;
+
+        do {
+            System.out.println("===================================================");
+            System.out.println("| 1. Coba lagi                                    |");
+            System.out.println("| 2. Kembali ke menu sebelumnya                   |");
+            System.out.println("===================================================");
+            choice = INPUT.inputNextInt("Masukkan pilihan Anda: ");
+
+            switch (choice) {
+                case 1:
+                    return true;
+                case 2:
+                    return false;
+                default:
+                    System.out.println("Pilihan tidak valid. Silakan pilih 1 atau 2.");
+                    break;
+            }
+        } while (true);
     }
 }

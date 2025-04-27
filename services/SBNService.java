@@ -26,13 +26,16 @@ public class SBNService {
         return true;
     }
 
-    public double calculateInterest(SBN sbnToSimulate, double nominal) {
-        double interestRate = sbnToSimulate.getInterestRate();
-        int jangkaWaktu = sbnToSimulate.getJangkaWaktu();
+    public CustomerSBN getCustomerSBNBySBNName(String sbnName) {
+        for (CustomerSBN customerSBN : DataStore.customerSBN) {
+            if (customerSBN.getSBN().getName().equals(sbnName)) {
+                return customerSBN;
+            }
+        }
+        return null;
+    }
 
-        double kuponBulanan = (interestRate / 12) * 0.9 * nominal;
-//        int totalBulan = jangkaWaktu * 12;
-//        double totalBunga = kuponBulanan;
-        return kuponBulanan;
+    public void addNominalInvestasi(CustomerSBN customerSBN, double nominal) {
+        customerSBN.setNominalInvestasi(customerSBN.getNominalInvestasi() + nominal);
     }
 }

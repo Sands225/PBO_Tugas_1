@@ -16,7 +16,7 @@ public class AuthService {
             if (user.getName().equals(inputName) && user.getPassword().equals(inputPassword)) {
                 if (user instanceof Admin) {
                     Admin admin = (Admin) user;
-                    view.greet(admin.getName());
+                    view.greetUser(admin.getName());
 //                    System.out.printf("Selamat datang %s!\n", admin.getName());
 
                     AdminView adminView = new AdminView();
@@ -24,7 +24,7 @@ public class AuthService {
                     return true;
                 } else if (user instanceof Customer) {
                     Customer customer = (Customer) user;
-                    view.greet(customer.getName());
+                    view.greetUser(customer.getName());
 //                    System.out.printf("Selamat datang %s!\n", customer.getName());
 
                     CustomerView customerView = new CustomerView();
