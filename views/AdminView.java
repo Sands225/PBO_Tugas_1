@@ -49,7 +49,7 @@ public class AdminView {
         System.out.println("===================================================");
         System.out.println("|               Saham yang tersedia               |");
         System.out.println("===================================================");
-        for (Saham saham: DataStore.saham) {
+        for (Saham saham : DataStore.saham) {
             count++;
             System.out.printf("| %2d | Kode saham : %-29s |\n", count, saham.getCode());
             System.out.printf("|    | Perusahaan : %-29s |\n", saham.getCompany());
@@ -153,5 +153,28 @@ public class AdminView {
         }
         adminMenu();
         return;
+    }
+
+    public void adminSBNMenu() {
+        int choice;
+        do {
+            System.out.println("===================================================");
+            System.out.println("|                  Admin Menu                     |");
+            System.out.println("|=================================================|");
+            System.out.println("| 1. Tambahkan SBN                                |");
+            System.out.println("| 2. Kembali                                      |");
+            System.out.println("===================================================");
+            choice = input.inputNextInt("| Masukkan pilihan Anda: ");
+
+            switch (choice) {
+                case 1:
+                    adminAddSBN();
+                    break;
+                case 2:
+                    View view = new View();
+                    view.mainView();
+                    break;
+            }
+        } while (choice < 1 || choice > 2);
     }
 }
