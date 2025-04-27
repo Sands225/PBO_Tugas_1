@@ -57,4 +57,30 @@ public class AdminView {
         }
         System.out.println("===================================================");
     }
+
+    public void adminSahamMenu() {
+        int choice;
+        do {
+            System.out.println("===================================================");
+            System.out.println("|                  Admin Menu                     |");
+            System.out.println("|=================================================|");
+            System.out.println("| 1. Tambahkan Saham                              |");
+            System.out.println("| 2. Ubah Saham                                   |");
+            System.out.println("| 3. Kembali                                      |");
+            System.out.println("===================================================");
+            choice = input.inputNextInt("| Masukkan pilihan Anda: ");
+
+            switch (choice) {
+                case 1:
+                    adminAddSaham();
+                    break;
+                case 2:
+                    adminUpdateSaham();
+                    break;
+                case 3:
+                    View view = new View();
+                    view.mainView();
+            }
+        } while (choice < 1 || choice > 3);
+    }
 }
