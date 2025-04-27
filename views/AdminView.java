@@ -148,4 +148,65 @@ public class AdminView {
             }
         } while (choice < 1 || choice > 2);
     }
+
+    public void adminAddSBN() {
+        while (true) {
+            String sbnName = input.inputNextLine("Masukkan nama Surat Berharga Negara: ");
+            SBN sbnToAdd = sbnService.getSBNByName(sbnName);
+
+            if (sbnToAdd == null) {
+                System.out.println("Nama SBN tidak ditemukan.");
+                if (!retry()) {
+                    adminSBNMenu();
+                    return;
+                }
+                continue;
+            }
+
+            double bunga = input.inputNextDouble("Masukkan persentase bunga (per tahun): ");
+            if (bunga <= 0) {
+                System.out.println("Persentase bunga harus lebih besar dari 0.");
+                if (!retry()) {
+                    adminSBNMenu();
+                    return;
+                }
+                continue;
+            }
+
+            double jangkaWaktu = input.inputNextInt("Masukkan jangka waktu (tahun): ");
+            if (jangkaWaktu <= 0) {
+                System.out.println("Jangka waktu harus lebih besar dari 0.");
+                if (!retry()) {
+                    adminSBNMenu();
+                    return;
+                }
+                continue;
+            }
+
+            String tanggalJatuhTempo = input.inputNextLine("Masukkan tanggal jatuh tempo (yyyy-mm-dd): ");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            try {
+                LocalDate.parse(tanggalJatuhTempo, formatter);
+                continue;
+            } catch (DateTimeParseException e) {
+                System.out.println("Format tanggal tidak valid. Gunakan yyyy-MM-dd.");
+                if (!retry()) {
+                    adminSBNMenu();
+                    return;
+                }
+            }
+
+            double kuotaNasional = input.inputNextDouble("Masukkan kuota nasional: ");
+            if (kuotaNasional <= 0) {
+                System.out.println("Kuota nasional harus lebih besar dari 0.");
+                if (!retry()) {
+                    adminSBNMenu();
+                    return;
+                }
+                continue;
+            }
+            System.out.println("Surat Berharga Negara berhasil ditambahkan!");
+            adminSBNMenu();
+        }
+    }
 }
