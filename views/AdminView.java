@@ -121,4 +121,37 @@ public class AdminView {
         adminMenu();
         return;
     }
+
+    public void adminUpdateSaham() {
+        while (true) {
+            showAllAvailableSaham();
+
+            System.out.println("===================================================");
+            System.out.println("|              Admin - Mengubah Saham             |");
+            System.out.println("|==================================================");
+            String sahamCode = input.inputNextLine("| Masukkan kode saham: ");
+            Saham saham = sahamService.getSahamByCode(sahamCode);
+
+            if (saham == null) {
+                System.out.println("Saham dengan kode tersebut tidak ditemukan.");
+                return;
+            }
+
+            double newPrice = input.inputNextDouble("| Masukkan harga baru untuk saham " + sahamCode + ": ");
+            saham.setPrice(newPrice);
+
+            System.out.println("===================================================");
+            System.out.println("|          Saham Berhasil Diperbaharui!           |");
+            System.out.println("|=================================================|");
+            System.out.println("| Detail Saham:                                   |");
+            System.out.printf("| Kode saham : %-34s |\n", sahamCode);
+            System.out.printf("| Perusahaan : %-34s |\n", saham.getCompany());
+            System.out.printf("| Jumlah     : %-34s |\n", String.format("%,.2f", saham.getPrice()));
+            System.out.println("===================================================");
+
+            break;
+        }
+        adminMenu();
+        return;
+    }
 }
