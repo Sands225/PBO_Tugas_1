@@ -113,4 +113,21 @@ public class AdminView {
             break;
         }
     }
+
+    public void adminUpdateSaham() {
+        showAllAvailableSaham();
+
+        String sahamCode = input.inputNextLine("Masukkan kode saham yang ingin diubah: ");
+        Saham saham = sahamService.getSahamByCode(sahamCode);
+
+        if (saham == null) {
+            System.out.println("Saham dengan kode tersebut tidak ditemukan.");
+            return;
+        }
+
+        double newPrice = input.inputNextDouble("Masukkan harga baru untuk saham " + sahamCode + ": ");
+        saham.setPrice(newPrice);
+
+        System.out.println("Harga saham berhasil diperbarui!");
+    }
 }
