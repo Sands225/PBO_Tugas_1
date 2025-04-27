@@ -177,4 +177,88 @@ public class AdminView {
             }
         } while (choice < 1 || choice > 2);
     }
+
+    public void adminAddSBN() {
+        while (true) {
+            System.out.println("===================================================");
+            System.out.println("|            Admin - Tambahkan SBN                |");
+            System.out.println("===================================================");
+            String sbnName = input.inputNextLine("| Masukkan nama Surat Berharga Negara: ");
+            SBN sbnToAdd = sbnService.getSBNByName(sbnName);
+
+            if (sbnToAdd != null) {
+                System.out.println("| SBN dengan nama tersebut sudah ada!             |");
+                System.out.println("===================================================");
+                if (!retry()) {
+                    adminSBNMenu();
+                    return;
+                }
+                continue;
+            }
+
+            double bunga = input.inputNextDouble("| Masukkan persentase bunga (per tahun): ");
+            if (bunga <= 0) {
+                System.out.println("| Persentase bunga harus lebih besar dari 0.       |");
+                System.out.println("===================================================");
+                if (!retry()) {
+                    adminSBNMenu();
+                    return;
+                }
+                continue;
+            }
+
+            int jangkaWaktu = input.inputNextInt("| Masukkan jangka waktu (tahun): ");
+            if (jangkaWaktu <= 0) {
+                System.out.println("| Jangka waktu harus lebih besar dari 0.           |");
+                System.out.println("===================================================");
+                if (!retry()) {
+                    adminSBNMenu();
+                    return;
+                }
+                continue;
+            }
+
+            String tanggalJatuhTempo = input.inputNextLine("| Masukkan tanggal jatuh tempo (yyyy-MM-dd): ");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            try {
+                LocalDate.parse(tanggalJatuhTempo, formatter);
+            } catch (DateTimeParseException e) {
+                System.out.println("| Format tanggal tidak valid. Gunakan yyyy-MM-dd.  |");
+                System.out.println("===================================================");
+                if (!retry()) {
+                    adminSBNMenu();
+                    return;
+                }
+                continue;
+            }
+
+            double kuotaNasional = input.inputNextDouble("| Masukkan kuota nasional: ");
+            if (kuotaNasional <= 0) {
+                System.out.println("| Kuota nasional harus lebih besar dari 0.         |");
+                System.out.println("===================================================");
+                if (!retry()) {
+                    adminSBNMenu();
+                    return;
+                }
+                continue;
+            }
+
+            SBN newSBN = new SBN(sbnName, bunga, jangkaWaktu, tanggalJatuhTempo, kuotaNasional);
+            DataStore.sbn.add(newSBN);
+
+            System.out.println("===================================================");
+            System.out.println("|         Surat Berharga Negara Ditambahkan!      |");
+            System.out.println("|=================================================|");
+            System.out.println("| Detail SBN:                                     |");
+            System.out.printf("| Nama SBN            : %-24s |\n", sbnName);
+            System.out.printf("| Bunga (per tahun)    : %,-23.2f%% |\n", bunga);
+            System.out.printf("| Jangka Waktu (tahun) : %-24d |\n", jangkaWaktu);
+            System.out.printf("| Tanggal Jatuh Tempo  : %-24s |\n", tanggalJatuhTempo);
+            System.out.printf("| Kuota Nasional       : %,-24.2f |\n", kuotaNasional);
+            System.out.println("===================================================");
+
+            break;
+        }
+        adminMenu();
+    }
 }
