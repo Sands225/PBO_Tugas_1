@@ -1,12 +1,14 @@
 package views;
 
 import services.AuthService;
-import utils.Input;
+import utils.*;
 
 public class View {
-    private static final Input INPUT = new Input();
+    private static final Input input = new Input();
+    private static final Clear clear = new Clear();
 
     public void mainView() {
+        clear.clearScreen();
         int choice;
 
         do {
@@ -16,7 +18,7 @@ public class View {
             System.out.println("| [1] Login                                       |");
             System.out.println("| [2] Keluar dari Program                         |");
             System.out.println("===================================================");
-            choice = INPUT.inputNextInt("Masukkan pilihan Anda: ");
+            choice = input.inputNextInt("Masukkan pilihan Anda: ");
 
             switch(choice) {
                 case 1:
@@ -36,17 +38,20 @@ public class View {
         boolean isLoggedIn = false;
 
         while (!isLoggedIn) {
-            String inputName = INPUT.inputNextLine("Masukkan nama: ");
-            String inputPassword = INPUT.inputNextLine("Masukkan password: ");
+            String inputName = input.inputNextLine("Masukkan nama: ");
+            String inputPassword = input.inputNextLine("Masukkan password: ");
 
             isLoggedIn = authService.loginHandler(inputName, inputPassword);
         }
     }
 
     public void greetUser(String username) {
+        clear.clearScreen();
+
         System.out.println("===================================================");
         System.out.printf("|         Selamat Datang, %-20s    |\n", username);
         System.out.println("===================================================");
+        System.out.println(" ");
     }
 
     public static boolean retry() {
@@ -57,7 +62,7 @@ public class View {
             System.out.println("| 1. Coba lagi                                    |");
             System.out.println("| 2. Kembali ke menu sebelumnya                   |");
             System.out.println("===================================================");
-            choice = INPUT.inputNextInt("Masukkan pilihan Anda: ");
+            choice = input.inputNextInt("Masukkan pilihan Anda: ");
 
             switch (choice) {
                 case 1:
