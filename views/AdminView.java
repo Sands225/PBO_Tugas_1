@@ -83,4 +83,42 @@ public class AdminView {
             }
         } while (choice < 1 || choice > 3);
     }
+
+    public void adminAddSaham() {
+        while (true) {
+            showAllAvailableSaham();
+
+            Saham currSaham;
+
+            System.out.println("===================================================");
+            System.out.println("|             Admin - Tambahkan Saham             |");
+            System.out.println("|==================================================");
+            String sahamCode = input.inputNextLine("| Masukkan kode saham: ");
+            currSaham = sahamService.getSahamByCode(sahamCode);
+
+            if (currSaham != null) {
+                System.out.println("Saham dengan kode " + sahamCode + " sudah ada!");
+                continue;
+            }
+
+            String company = input.inputNextLine("| Masukkan nama perusahaan: ");
+            double price = input.inputNextDouble("| Masukkan harga saham: ");
+
+            Saham newSaham = new Saham(sahamCode, company, price);
+            DataStore.saham.add(newSaham);
+
+            System.out.println("===================================================");
+            System.out.println("|            Penambahan Saham Berhasil!           |");
+            System.out.println("|=================================================|");
+            System.out.println("| Detail Saham:                                   |");
+            System.out.printf("| Kode saham : %-34s |\n", sahamCode);
+            System.out.printf("| Perusahaan : %-34s |\n", company);
+            System.out.printf("| Jumlah     : %-34s |\n", String.format("%,.2f", price));
+            System.out.println("===================================================");
+
+            break;
+        }
+        adminMenu();
+        return;
+    }
 }
