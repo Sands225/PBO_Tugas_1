@@ -90,4 +90,27 @@ public class AdminView {
             }
         } while (choice < 1 || choice > 3);
     }
+
+    public void adminAddSaham() {
+        while (true) {
+            showAllAvailableSaham();
+
+            String sahamCode = input.inputNextLine("Masukkan kode saham: ");
+            boolean isSahamExists = sahamService.checkSahamAvailability(sahamCode);
+
+            if (isSahamExists) {
+                System.out.println("Saham dengan kode " + sahamCode + " sudah ada!");
+                continue; // allow retry
+            }
+
+            String company = input.inputNextLine("Masukkan nama perusahaan: ");
+            double price = input.inputNextDouble("Masukkan harga saham: ");
+
+            Saham newSaham = new Saham(sahamCode, company, price);
+            DataStore.saham.add(newSaham);
+
+            System.out.println("Saham berhasil ditambahkan!");
+            break;
+        }
+    }
 }
