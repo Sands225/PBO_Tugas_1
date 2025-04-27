@@ -12,9 +12,19 @@ public class CustomerView {
     private final Input input = new Input();
     private final SahamService sahamService = new SahamService();
     private final SBNService sbnService = new SBNService();
+    private final Clear clear = new Clear();
+
+    boolean isGreet = true;
 
     public void customerMenu(Customer customer) {
         int choice;
+
+        if (!isGreet) {
+            clear.clearScreen();
+        } else {
+            isGreet = false;
+        }
+
         do {
             System.out.println("===================================================");
             System.out.println("|                  Customer Menu                  |");
@@ -43,6 +53,7 @@ public class CustomerView {
     }
 
     public void showAllCustomerSaham(Customer customer) {
+        clear.clearScreen();
         int count = 0;
 
         System.out.println("===================================================");
@@ -59,9 +70,12 @@ public class CustomerView {
             System.out.println("| Anda tidak memiliki saham tersisa!              |");
         }
         System.out.println("===================================================");
+
+        input.enterToContinue();
     }
 
     public void showAllAvailableSaham() {
+        clear.clearScreen();
         int count = 0;
 
         System.out.println("===================================================");
@@ -74,6 +88,8 @@ public class CustomerView {
             System.out.printf("|    | Harga saham: %-29s |\n", String.format("%,.2f", saham.getPrice()));
         }
         System.out.println("===================================================");
+
+        input.enterToContinue();
     }
 
     public void customerSahamMenu(Customer customer) {
@@ -216,6 +232,7 @@ public class CustomerView {
     }
 
     public void showAllSBN() {
+        clear.clearScreen();
         int count = 0;
 
         System.out.println("===================================================");
@@ -233,6 +250,7 @@ public class CustomerView {
     }
 
     public void showAllCustomerSBN(Customer customer) {
+        clear.clearScreen();
         int count = 0;
 
         System.out.println("===================================================");
@@ -253,6 +271,7 @@ public class CustomerView {
     }
 
     public void customerSBNMenu(Customer customer) {
+        clear.clearScreen();
         int choice;
 
         showAllCustomerSBN(customer);
@@ -436,8 +455,9 @@ public class CustomerView {
         System.out.println("===================================================");
     }
 
-
     public void customerPortofolio(Customer customer) {
+        clear.clearScreen();
+
         showAllDetailCustomerSaham(customer);
         showAllDetailCustomerSBN(customer);
 

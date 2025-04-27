@@ -39,5 +39,6 @@ public class Input {
     public void enterToContinue() {
         System.out.print("Press Enter to continue...");
         scanner.nextLine();
+        System.out.println(" ");
     }
 }
