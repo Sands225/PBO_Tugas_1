@@ -130,4 +130,22 @@ public class AdminView {
 
         System.out.println("Harga saham berhasil diperbarui!");
     }
+
+    public void adminSBNMenu() {
+        int choice;
+        do {
+            System.out.println("1. Tambahkan SBN");
+            System.out.println("2. Kembali");
+
+            choice = input.inputNextInt("Masukkan pilihan Anda: ");
+
+            switch (choice) {
+                case 1:
+                    adminAddSBN();
+                    break;
+                case 2:
+                    return;
+            }
+        } while (choice < 1 || choice > 2);
+    }
 }
