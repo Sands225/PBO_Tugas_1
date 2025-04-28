@@ -1,6 +1,5 @@
 package services;
 
-import models.Customer;
 import models.CustomerSaham;
 import models.Saham;
 import data.DataStore;
@@ -8,7 +7,7 @@ import data.DataStore;
 public class SahamService {
     public CustomerSaham getCustomerSahamBySahamCode(String sahamCode) {
         for (CustomerSaham customerSaham: DataStore.customerSaham) {
-            if (customerSaham.getSaham().getCode().equals(sahamCode)) {
+            if (customerSaham.getSaham().getCode().equalsIgnoreCase(sahamCode)) {
                 return customerSaham;
             }
         }
@@ -21,7 +20,7 @@ public class SahamService {
 
     public Saham getSahamByCode(String sahamCode) {
         for (Saham saham: DataStore.saham) {
-            if (saham.getCode().equals(sahamCode)) {
+            if (saham.getCode().equalsIgnoreCase(sahamCode)) {
                 return saham;
             }
         }
@@ -30,19 +29,19 @@ public class SahamService {
 
     public double getMarketBySahamCode(String sahamCode) {
         for (Saham saham: DataStore.saham) {
-            if (saham.getCode().equals(sahamCode)) {
+            if (saham.getCode().equalsIgnoreCase(sahamCode)) {
                 return saham.getPrice();
             }
         }
         return -1;
     }
 
-    public void addQuantityAndTotalPurchase(CustomerSaham customerSaham, double quantity, double totalPurchase) {
+    public void addQuantityAndTotalPurchase(CustomerSaham customerSaham, int quantity, double totalPurchase) {
         customerSaham.setQuantity(customerSaham.getQuantity() + quantity);
         customerSaham.setTotalPurchaseValue(customerSaham.getTotalPurchaseValue() + totalPurchase);
     }
 
-    public void subtractCustomerSahamQuantity(CustomerSaham customerSaham, double sahamQuantity) {
+    public void subtractCustomerSahamQuantity(CustomerSaham customerSaham, int sahamQuantity) {
         customerSaham.setQuantity(customerSaham.getQuantity() - sahamQuantity);
 
         if (customerSaham.getQuantity() <= 0) {

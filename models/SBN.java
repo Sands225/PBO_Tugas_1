@@ -3,8 +3,8 @@ package models;
 public class SBN {
     String name;
     double interestRate;
-    int jangkaWaktu; // in years or months
-    String tanggalJatuhTempo; // could use java.time.LocalDate for better handling
+    int jangkaWaktu;
+    String tanggalJatuhTempo;
     double kuotaNasional;
 
     public SBN(String name, double interestRate, int jangkaWaktu, String tanggalJatuhTempo, double kuotaNasional) {

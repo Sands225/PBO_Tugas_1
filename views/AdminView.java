@@ -19,8 +19,6 @@ public class AdminView {
     private final SBNService sbnService = new SBNService();
     private final Clear clear = new Clear();
 
-//    private boolean isGreet = true;
-
     public void adminMenu() {
         int choice;
 
@@ -371,11 +369,6 @@ public class AdminView {
             System.out.printf("| Nama Saham       : %-38s |\n", sahamCode);
             System.out.printf("| Perusahaan       : %-38s |\n", company);
             System.out.printf("| Harga per lembar : Rp %,-35.2f |\n", price);
-            System.out.println("=============================================================");
-            input.enterToContinue();
-
-            System.out.println("=============================================================");
-            System.out.println("|                     Tambahkan Saham?                      |");
             System.out.println("|===========================================================|");
             System.out.println("| 1. Tambahkan Saham                                        |");
             System.out.println("| 2. Batalkan Penambahan                                    |");
@@ -405,11 +398,6 @@ public class AdminView {
             System.out.printf("| Perusahaan              : %-30s |\n", company);
             System.out.printf("| Harga per lembar (lama) : Rp %,-27.2f |\n", price);
             System.out.printf("| Harga per lembar (baru) : Rp %,-27.2f |\n", newPrice);
-            System.out.println("=============================================================");
-            input.enterToContinue();
-
-            System.out.println("=============================================================");
-            System.out.println("|                   Simpan Perubahan?                       |");
             System.out.println("|===========================================================|");
             System.out.println("| 1. Simpan Perubahan                                        |");
             System.out.println("| 2. Batalkan Perubahan                                      |");
@@ -427,7 +415,6 @@ public class AdminView {
         }
     }
 
-
     public boolean addSBNConfirmation(String sbnName, double bunga, int jangkaWaktu, String tanggalJatuhTempo, double kuotaNasional) {
         while (true) {
             int choice;
@@ -442,11 +429,6 @@ public class AdminView {
             System.out.printf("| Tanggal Jatuh Tempo  : %-34s |\n", tanggalJatuhTempo);
             System.out.printf("| Kuota Nasional       : RP %,-31.2f |\n", kuotaNasional);
             System.out.println("=============================================================");
-            input.enterToContinue();
-
-            System.out.println("=============================================================");
-            System.out.println("|                       Tambahkan Saham?                    |");
-            System.out.println("|===========================================================|");
             System.out.println("| 1. Tambahkan Surat Berharga Negara                        |");
             System.out.println("| 2. Batalkan Penambahan                                    |");
             System.out.println("=============================================================");

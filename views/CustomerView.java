@@ -14,8 +14,6 @@ public class CustomerView {
     private final SBNService sbnService = new SBNService();
     private final Clear clear = new Clear();
 
-//    private boolean isGreet = true;
-
     public void customerMenu(Customer customer) {
         int choice;
 
@@ -63,7 +61,7 @@ public class CustomerView {
                 count++;
                 System.out.printf("| %2d | Kode saham  : %-39s|\n", count, customerSaham.getSaham().getCode());
                 System.out.printf("|    | Perusahaan  : %-39s|\n", customerSaham.getSaham().getCompany());
-                System.out.printf("|    | Jumlah saham: %-39s|\n", String.format("%,.2f", customerSaham.getQuantity()));
+                System.out.printf("|    | Jumlah saham: %-39s|\n", String.format("%d", customerSaham.getQuantity()));
                 System.out.println("|    |                                                      |");
             }
         }
@@ -146,11 +144,14 @@ public class CustomerView {
                 continue;
             }
 
-            double quantity = input.inputNextDouble("| Masukkan jumlah saham: ");
+            int quantity = input.inputNextInt("| Masukkan jumlah saham: ");
             boolean qtyStatus = sahamService.checkCustomerSahamQuantity(quantity, customerSaham.getQuantity());
 
             if (!qtyStatus) {
-                System.out.printf("Jumlah saham tidak mencukupi. Anda hanya memiliki %.2f saham %s.\n", customerSaham.getQuantity(), customerSaham.getSaham().getCode());
+                System.out.println("=============================================================");
+                System.out.println("|                 Jumlah saham tidak mencukupi              |");
+                System.out.printf("|            Anda hanya memiliki %d saham %-10s    |\n", customerSaham.getQuantity(), customerSaham.getSaham().getCode());
+                System.out.println("=============================================================");
                 if (!retry()) {
                     customerMenu(customer);
                     return;
@@ -171,7 +172,7 @@ public class CustomerView {
             } else {
                 System.out.println("| Saldo Anda saat ini:                            |");
                 System.out.printf("| Kode saham : %-44s |\n", sahamCode);
-                System.out.printf("| Jumlah     : %-44s |\n", String.format("%,.2f", quantity));
+                System.out.printf("| Jumlah     : %-44s |\n", String.format("%d", quantity));
                 System.out.println("=============================================================");
 
             }
@@ -202,7 +203,7 @@ public class CustomerView {
                 continue;
             }
 
-            double quantity = input.inputNextDouble("| Masukkan jumlah saham yang ingin dibeli: ");
+            int quantity = input.inputNextInt("Masukkan jumlah saham yang ingin dibeli: ");
             if (quantity <= 0) {
                 System.out.println("Jumlah saham harus lebih dari 0.");
                 if (!retry()) {
@@ -227,7 +228,7 @@ public class CustomerView {
             System.out.println("|===========================================================|");
             System.out.println("| Detail pembelian Saham:                                   |");
             System.out.printf("| Kode saham : %-44s |\n", customerSaham.getSaham().getCode());
-            System.out.printf("| Jumlah     : %-44s |\n", String.format("%,.2f", customerSaham.getQuantity()));
+            System.out.printf("| Jumlah     : %-44s |\n", String.format("%d", customerSaham.getQuantity()));
             System.out.println("|===========================================================|");
 
             input.enterToContinue();
@@ -256,40 +257,17 @@ public class CustomerView {
         System.out.println("|===========================================================|");
     }
 
-//    public void showAllCustomerSBN(Customer customer) {
-//        clear.clearScreen();
-//        int count = 0;
-//
-//        System.out.println("|===========================================================|");
-//        System.out.println("|           Surat Berharga Negara yang Anda miliki          |");
-//        System.out.println("|===========================================================|");
-//
-//        for (CustomerSBN customerSBN: DataStore.customerSBN) {
-//            if (customerSBN.getCustomerName().equals(customer.getName())) {
-//                count++;
-//                System.out.printf("| %2d | Nama SBN      : %-36s |\n", count, customerSBN.getSBN().getName());
-//                System.out.printf("|    | Bunga (tahun) : %-36s |\n", String.format("%,.2f", customerSBN.getSBN().getInterestRate()));
-//                System.out.printf("|    | Tanggal tempo : %-36s |\n", customerSBN.getSBN().getTanggalJatuhTempo());
-//                System.out.printf("|    | Jangka waktu  : %-36s |\n", String.format("%2d", customerSBN.getSBN().getJangkaWaktu()));
-//                System.out.printf("|    | Nominal       : %-36s |\n", customerSBN.getNominalInvestasi());
-//                System.out.println("|    |                                                      |");
-//            };
-//        }
-//        System.out.println("|===========================================================|");
-//    }
-
     public void customerSBNMenu(Customer customer) {
         clear.clearScreen();
         int choice;
 
-//        showAllCustomerSBN(customer);
         do {
             System.out.println("|===========================================================|");
             System.out.println("|                     Customer - SBN Menu                   |");
             System.out.println("|===========================================================|");
             System.out.println("| 1. Beli Surat Berharga Negara                             |");
             System.out.println("| 2. Simulasi Surat Berharga Negara                         |");
-            System.out.println("| 3. Keluar                                                 |");
+            System.out.println("| 3. Kembali                                                |");
             System.out.println("|===========================================================|");
             choice = input.inputNextInt("| Masukkan pilihan Anda: ");
 
@@ -301,8 +279,7 @@ public class CustomerView {
                     customerSBNSimulation(customer);
                     break;
                 case 3:
-                    View view = new View();
-                    view.mainView();
+                    customerSBNMenu(customer);
                     break;
             }
         } while (choice < 1 || choice > 3);
@@ -426,7 +403,7 @@ public class CustomerView {
                 currMarketValue = sahamService.getMarketBySahamCode(customerSaham.getSaham().getCode());
                 count++;
                 System.out.printf("| %2d | Kode saham       : %-33s |\n", count, customerSaham.getSaham().getCode());
-                System.out.printf("|    | Jumlah saham     : %,-33.2f |\n", customerSaham.getQuantity());
+                System.out.printf("|    | Jumlah saham     : %-33d |\n", customerSaham.getQuantity());
                 System.out.printf("|    | Nominal Pembelian: Rp %,-30.2f |\n", customerSaham.getTotalPurchaseValue());
                 System.out.printf("|    | Harga saat ini   : Rp %,-30.2f |\n", currMarketValue);
                 System.out.println("|    |                                                      |");
@@ -453,7 +430,7 @@ public class CustomerView {
                 double monthlyInterest = annualRate * nominal * 0.9 / 12 ;
 
                 System.out.printf("| %-2d | Nama SBN        : %-34s |\n", count, customerSBN.getSBN().getName());
-                System.out.printf("|    | Bunga (tahun)   : %-34s |\n", String.format("%.2f%%", customerSBN.getSBN().getInterestRate()));
+                System.out.printf("|    | Bunga (tahun)   : %-34s |\n", String.format("%.2f%%", customerSBN.getSBN().getInterestRate()) + " per tahun");
                 System.out.printf("|    | Tanggal tempo   : %-34s |\n", customerSBN.getSBN().getTanggalJatuhTempo());
                 System.out.printf("|    | Jangka waktu    : %-34s |\n", String.format("%d", customerSBN.getSBN().getJangkaWaktu()) + " tahun");
                 System.out.printf("|    | Nominal         : Rp %,-31.2f |\n", customerSBN.getNominalInvestasi());
@@ -477,5 +454,103 @@ public class CustomerView {
 
         input.enterToContinue();
         customerMenu(customer);
+    }
+
+    public boolean buySahamConfirmation(String sahamCode, String company, double price, double amount) {
+        while (true) {
+            int choice;
+
+            clear.clearScreen();
+            System.out.println("=============================================================");
+            System.out.println("|                 Konfirmasi Pembelian Saham                |");
+            System.out.println("=============================================================");
+            System.out.printf("| Nama Saham       : %-38s |\n", sahamCode);
+            System.out.printf("| Perusahaan       : %-38s |\n", company);
+            System.out.printf("| Harga per lembar : Rp %,-35.2f |\n", price);
+            System.out.printf("| Banyak lembar    : %,-38.2f |\n", amount);
+            System.out.println("|-----------------------------------------------------------|");
+            System.out.printf("| Total Harga      : %,-38.2f |\n", price * amount);
+            System.out.println("|===========================================================|");
+            System.out.println("| 1. Beli Saham                                             |");
+            System.out.println("| 2. Batalkan Pembelian                                     |");
+            System.out.println("=============================================================");
+            choice = input.inputNextInt("Masukkan pilihan Anda: ");
+
+            switch (choice) {
+                case 1:
+                    return true;
+                case 2:
+                    return false;
+                default:
+                    System.out.println("Pilihan tidak valid! Silahkan coba lagi!");
+            }
+        }
+    }
+
+    public boolean sellSahamConfirmation(String sahamCode, String company, double price, double amount) {
+        while (true) {
+            int choice;
+
+            clear.clearScreen();
+            System.out.println("=============================================================");
+            System.out.println("|                Konfirmasi Penjualan Data Saham            |");
+            System.out.println("=============================================================");
+            System.out.printf("| Nama Saham       : %-38s |\n", sahamCode);
+            System.out.printf("| Perusahaan       : %-38s |\n", company);
+            System.out.printf("| Harga per lembar : Rp %,-35.2f |\n", price);
+            System.out.printf("| Banyak lembar    : %,-38.2f |\n", amount);
+            System.out.println("|-----------------------------------------------------------|");
+            System.out.printf("| Total Harga      : %,-38.2f |\n", price * amount);
+            System.out.println("|===========================================================|");
+            System.out.println("| 1. Simpan Perubahan                                        |");
+            System.out.println("| 2. Batalkan Perubahan                                      |");
+            System.out.println("=============================================================");
+            choice = input.inputNextInt("Masukkan pilihan Anda: ");
+
+            switch (choice) {
+                case 1:
+                    return true;
+                case 2:
+                    return false;
+                default:
+                    System.out.println("Pilihan tidak valid! Silahkan coba lagi!");
+            }
+        }
+    }
+
+    public boolean buySBNConfirmation(String sbnName, double interestRate, int jangkaWaktu, String tanggalJatuhTempo, double nominal) {
+        while (true) {
+            double annualRate = interestRate / 100;
+            double monthlyInterest = annualRate * nominal * 0.9 / 12 ;
+
+            int choice;
+
+            clear.clearScreen();
+            System.out.println("=============================================================");
+            System.out.println("|         Konfirmasi Penambahan Surat Berharga Negara       |");
+            System.out.println("=============================================================");
+            System.out.printf("| Nama SBN             : %-34s |\n", sbnName);
+            System.out.printf("| Bunga (per tahun)    : %-34s |\n", String.format("%,.2f", annualRate) + " %");
+            System.out.printf("| Jangka Waktu         : %-34s |\n", String.format("%d", jangkaWaktu) + " tahun");
+            System.out.printf("| Tanggal Jatuh Tempo  : %-34s |\n", tanggalJatuhTempo);
+            System.out.printf("| Nominal Pembelian    : RP %,-31.2f |\n", monthlyInterest);
+            System.out.println("|-----------------------------------------------------------|");
+            System.out.printf("| Total Harga    : RP %,-31.2f |\n", monthlyInterest);
+            System.out.println("|-----------------------------------------------------------|");
+            System.out.println("|===========================================================|");
+            System.out.println("| 1. Tambahkan Surat Berharga Negara                        |");
+            System.out.println("| 2. Batalkan Penambahan                                    |");
+            System.out.println("=============================================================");
+            choice = input.inputNextInt("Masukkan pilihan Anda: ");
+
+            switch (choice) {
+                case 1:
+                    return true;
+                case 2:
+                    return false;
+                default:
+                    System.out.println("Pilihan tidak valid! Silahkan coba lagi!");
+            }
+        }
     }
 }
