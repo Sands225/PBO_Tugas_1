@@ -12,12 +12,14 @@ public class View {
         int choice;
 
         do {
-            System.out.println("===================================================");
-            System.out.println("|    Investasi Saham dan Surat Berharga Negara    |");
-            System.out.println("|=================================================|");
-            System.out.println("| [1] Login                                       |");
-            System.out.println("| [2] Keluar dari Program                         |");
-            System.out.println("===================================================");
+            System.out.println("=============================================================");
+            System.out.println("|                                                           |");
+            System.out.println("|         Investasi Saham dan Surat Berharga Negara         |");
+            System.out.println("|                                                           |");
+            System.out.println("|===========================================================|");
+            System.out.println("| [1] Login                                                 |");
+            System.out.println("| [2] Keluar dari Program                                   |");
+            System.out.println("=============================================================");
             choice = input.inputNextInt("Masukkan pilihan Anda: ");
 
             switch(choice) {
@@ -48,20 +50,22 @@ public class View {
     public void greetUser(String username) {
         clear.clearScreen();
 
-        System.out.println("===================================================");
-        System.out.printf("|         Selamat Datang, %-20s    |\n", username);
-        System.out.println("===================================================");
-        System.out.println(" ");
+        System.out.println("=============================================================");
+        System.out.println("|                                                           |");
+        System.out.printf("|                 Selamat Datang, %-22s    |\n", username);
+        System.out.println("|                                                           |");
+        System.out.println("=============================================================");
+        input.enterToContinue();
     }
 
     public static boolean retry() {
         int choice;
 
         do {
-            System.out.println("===================================================");
-            System.out.println("| 1. Coba lagi                                    |");
-            System.out.println("| 2. Kembali ke menu sebelumnya                   |");
-            System.out.println("===================================================");
+            System.out.println("=============================================================");
+            System.out.println("| 1. Coba lagi                                              |");
+            System.out.println("| 2. Kembali ke menu sebelumnya                             |");
+            System.out.println("=============================================================");
             choice = input.inputNextInt("Masukkan pilihan Anda: ");
 
             switch (choice) {
@@ -70,7 +74,7 @@ public class View {
                 case 2:
                     return false;
                 default:
-                    System.out.println("Pilihan tidak valid. Silakan pilih 1 atau 2.");
+                    System.out.println("Pilihan tidak valid. Silakan coba lagi.");
                     break;
             }
         } while (true);

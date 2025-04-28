@@ -25,6 +25,6 @@ public class DataStore {
 
         customerSaham.add(new CustomerSaham("customer1", new Saham("BBCA", "Bank Central Asia", 10_000), 100, 1_000_000));
 
-        customerSBN.add(new CustomerSBN("customer1", new SBN("ORI023", 5.5, 2, "01-12-2027", 8_000_000), 15_000_000));
+        customerSBN.add(new CustomerSBN("customer1", new SBN("ORI023", 5.5, 2, "01-12-2027", 8_000_000), 4_00_000_000));
     }
 }
