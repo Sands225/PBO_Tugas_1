@@ -13,7 +13,7 @@ public class SBNService {
         return null;
     }
 
-    public static boolean checkNominalInvestasi(SBN sbnToBuy, double nominal) {
+    public static boolean checkInvestmentAmount(SBN sbnToBuy, double nominal) {
         if (nominal <= 0) {
             System.out.println("Nominal harus lebih dari 0.");
             return false;
@@ -35,7 +35,7 @@ public class SBNService {
         return null;
     }
 
-    public static void addNominalInvestasi(CustomerSBN customerSBN, double nominal) {
-        customerSBN.setNominalInvestasi(customerSBN.getNominalInvestasi() + nominal);
+    public static void addInvestmentAmount(CustomerSBN customerSBN, double nominal) {
+        customerSBN.setInvestmentAmount(customerSBN.getInvestmentAmount() + nominal);
     }
 }

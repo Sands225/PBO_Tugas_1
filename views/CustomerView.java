@@ -312,7 +312,7 @@ public class CustomerView {
             }
 
             double nominal = Input.inputNextDouble("| Masukkan jumlah nominal pembelian SBN: ");
-            boolean isNominalValid = SBNService.checkNominalInvestasi(sbnToBuy, nominal);
+            boolean isNominalValid = SBNService.checkInvestmentAmount(sbnToBuy, nominal);
 
             if (!isNominalValid) {
                 if (!View.retry()) {
@@ -337,7 +337,7 @@ public class CustomerView {
             CustomerSBN customerSBN = SBNService.getCustomerSBNBySBNName(sbnName);
 
             if (customerSBN != null) {
-                SBNService.addNominalInvestasi(customerSBN, nominal);
+                SBNService.addInvestmentAmount(customerSBN, nominal);
             } else  {
                 customerSBN = new CustomerSBN(customer.getName(), sbnToBuy, nominal);
                 DataStore.customerSBN.add(customerSBN);
@@ -351,7 +351,7 @@ public class CustomerView {
             System.out.printf("| Bunga (tahun) : %-45s |\n", String.format("%,.2f", customerSBN.getSBN().getInterestRate()));
             System.out.printf("| Tanggal tempo : %-45s |\n", customerSBN.getSBN().getMaturityDate());
             System.out.printf("| Jangka waktu  : %-45s |\n", String.format("%2d", customerSBN.getSBN().getMaturityPeriod()));
-            System.out.printf("| Nominal       : %-45s |\n", String.format("%,.2f", customerSBN.getNominalInvestasi()));
+            System.out.printf("| Nominal       : %-45s |\n", String.format("%,.2f", customerSBN.getInvestmentAmount()));
             System.out.println("=============================================================");
 
             customerSBNMenu(customer);
@@ -375,7 +375,7 @@ public class CustomerView {
             }
 
             double nominal = Input.inputNextDouble("| Masukkan jumlah nominal SBN: ");
-            boolean isNominalValid = SBNService.checkNominalInvestasi(sbnToSimulate, nominal);
+            boolean isNominalValid = SBNService.checkInvestmentAmount(sbnToSimulate, nominal);
 
             if (!isNominalValid) {
                 System.out.println("Nominal tidak boleh melebihi kuota nasional");
@@ -447,14 +447,14 @@ public class CustomerView {
                 count++;
 
                 double annualRate = customerSBN.getSBN().getInterestRate() / 100;
-                double nominal = customerSBN.getNominalInvestasi();
+                double nominal = customerSBN.getInvestmentAmount();
                 double monthlyInterest = annualRate * nominal * 0.9 / 12 ;
 
                 System.out.printf("| %-2d | Nama SBN        : %-34s |\n", count, customerSBN.getSBN().getName());
                 System.out.printf("|    | Bunga (tahun)   : %-34s |\n", String.format("%.2f%%", customerSBN.getSBN().getInterestRate()) + " per tahun");
                 System.out.printf("|    | Tanggal tempo   : %-34s |\n", customerSBN.getSBN().getMaturityDate());
                 System.out.printf("|    | Jangka waktu    : %-34s |\n", String.format("%d", customerSBN.getSBN().getMaturityPeriod()) + " tahun");
-                System.out.printf("|    | Nominal         : Rp %,-31.2f |\n", customerSBN.getNominalInvestasi());
+                System.out.printf("|    | Nominal         : Rp %,-31.2f |\n", customerSBN.getInvestmentAmount());
                 System.out.printf("|    | Bunga per bulan : Rp %,-31.2f |\n", monthlyInterest);
                 System.out.println("|    |                                                      |");
 
