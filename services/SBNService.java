@@ -6,7 +6,7 @@ import models.*;
 public class SBNService {
     public SBN getSBNByName(String sbnName) {
         for (SBN sbn: DataStore.sbn) {
-            if (sbn.getName().equals(sbnName)) {
+            if (sbn.getName().equalsIgnoreCase(sbnName)) {
                 return sbn;
             }
         }
@@ -28,7 +28,7 @@ public class SBNService {
 
     public CustomerSBN getCustomerSBNBySBNName(String sbnName) {
         for (CustomerSBN customerSBN : DataStore.customerSBN) {
-            if (customerSBN.getSBN().getName().equals(sbnName)) {
+            if (customerSBN.getSBN().getName().equalsIgnoreCase(sbnName)) {
                 return customerSBN;
             }
         }

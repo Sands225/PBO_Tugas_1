@@ -14,18 +14,14 @@ public class CustomerView {
     private final SBNService sbnService = new SBNService();
     private final Clear clear = new Clear();
 
-    private boolean isGreet = true;
+//    private boolean isGreet = true;
 
     public void customerMenu(Customer customer) {
         int choice;
 
-        if (!isGreet) {
-            clear.clearScreen();
-        } else {
-            isGreet = false;
-        }
-
         do {
+            clear.clearScreen();
+
             System.out.println("=============================================================");
             System.out.println("|                       Customer Menu                       |");
             System.out.println("|===========================================================|");
@@ -102,6 +98,7 @@ public class CustomerView {
         int choice;
 
 //        showAllCustomerSaham(customer);
+        clear.clearScreen();
         do {
             System.out.println("=============================================================");
             System.out.println("|                     Customer - Menu Saham                 |");
@@ -252,40 +249,40 @@ public class CustomerView {
             System.out.printf("| %2d | Nama SBN      : %-36s |\n", count, sbn.getName());
             System.out.printf("|    | Bunga (tahun) : %-36s |\n", String.format("%,.2f", sbn.getInterestRate()));
             System.out.printf("|    | Tanggal tempo : %-36s |\n", sbn.getTanggalJatuhTempo());
-            System.out.printf("|    | Jangka waktu  : %-36s |\n", String.format("%2d", sbn.getJangkaWaktu()));
-            System.out.printf("|    | Kuota nasional: %-36s |\n", sbn.getKuotaNasional());
+            System.out.printf("|    | Jangka waktu  : %-36s |\n", String.format("%-2d", sbn.getJangkaWaktu()));
+            System.out.printf("|    | Kuota nasional: %-36s |\n", String.format("%,.2f", sbn.getKuotaNasional()));
             System.out.println("|    |                                                      |");
         }
         System.out.println("|===========================================================|");
     }
 
-    public void showAllCustomerSBN(Customer customer) {
-        clear.clearScreen();
-        int count = 0;
-
-        System.out.println("|===========================================================|");
-        System.out.println("|           Surat Berharga Negara yang Anda miliki          |");
-        System.out.println("|===========================================================|");
-
-        for (CustomerSBN customerSBN: DataStore.customerSBN) {
-            if (customerSBN.getCustomerName().equals(customer.getName())) {
-                count++;
-                System.out.printf("| %2d | Nama SBN      : %-36s |\n", count, customerSBN.getSBN().getName());
-                System.out.printf("|    | Bunga (tahun) : %-36s |\n", String.format("%,.2f", customerSBN.getSBN().getInterestRate()));
-                System.out.printf("|    | Tanggal tempo : %-36s |\n", customerSBN.getSBN().getTanggalJatuhTempo());
-                System.out.printf("|    | Jangka waktu  : %-36s |\n", String.format("%2d", customerSBN.getSBN().getJangkaWaktu()));
-                System.out.printf("|    | Nominal       : %-36s |\n", customerSBN.getNominalInvestasi());
-                System.out.println("|    |                                                      |");
-            };
-        }
-        System.out.println("|===========================================================|");
-    }
+//    public void showAllCustomerSBN(Customer customer) {
+//        clear.clearScreen();
+//        int count = 0;
+//
+//        System.out.println("|===========================================================|");
+//        System.out.println("|           Surat Berharga Negara yang Anda miliki          |");
+//        System.out.println("|===========================================================|");
+//
+//        for (CustomerSBN customerSBN: DataStore.customerSBN) {
+//            if (customerSBN.getCustomerName().equals(customer.getName())) {
+//                count++;
+//                System.out.printf("| %2d | Nama SBN      : %-36s |\n", count, customerSBN.getSBN().getName());
+//                System.out.printf("|    | Bunga (tahun) : %-36s |\n", String.format("%,.2f", customerSBN.getSBN().getInterestRate()));
+//                System.out.printf("|    | Tanggal tempo : %-36s |\n", customerSBN.getSBN().getTanggalJatuhTempo());
+//                System.out.printf("|    | Jangka waktu  : %-36s |\n", String.format("%2d", customerSBN.getSBN().getJangkaWaktu()));
+//                System.out.printf("|    | Nominal       : %-36s |\n", customerSBN.getNominalInvestasi());
+//                System.out.println("|    |                                                      |");
+//            };
+//        }
+//        System.out.println("|===========================================================|");
+//    }
 
     public void customerSBNMenu(Customer customer) {
         clear.clearScreen();
         int choice;
 
-        showAllCustomerSBN(customer);
+//        showAllCustomerSBN(customer);
         do {
             System.out.println("|===========================================================|");
             System.out.println("|                     Customer - SBN Menu                   |");

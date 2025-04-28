@@ -55,7 +55,7 @@ public class View {
         System.out.printf("|                 Selamat Datang, %-22s    |\n", username);
         System.out.println("|                                                           |");
         System.out.println("=============================================================");
-        System.out.println(" ");
+        input.enterToContinue();
     }
 
     public static boolean retry() {
