@@ -19,7 +19,7 @@ public class AdminView {
     private final SBNService sbnService = new SBNService();
     private final Clear clear = new Clear();
 
-    boolean isGreet = true;
+    private boolean isGreet = true;
 
     public void adminMenu() {
         int choice;
@@ -50,6 +50,7 @@ public class AdminView {
                 case 3:
                     View view = new View();
                     view.mainView();
+                    break;
             }
         } while (choice < 1 || choice > 3);
     }
@@ -96,8 +97,8 @@ public class AdminView {
                     adminUpdateSaham();
                     break;
                 case 3:
-                    View view = new View();
-                    view.mainView();
+                    adminMenu();
+                    break;
             }
         } while (choice < 1 || choice > 3);
     }
@@ -306,12 +307,13 @@ public class AdminView {
             System.out.println("|         Surat Berharga Negara Ditambahkan!      |");
             System.out.println("|=================================================|");
             System.out.println("| Detail SBN:                                     |");
-            System.out.printf("| Nama SBN            : %-24s |\n", sbnName);
-            System.out.printf("| Bunga (per tahun)    : %,-23.2f%% |\n", bunga);
+            System.out.printf("| Nama SBN             : %-24s |\n", sbnName);
+            System.out.printf("| Bunga (per tahun)    : %-24s |\n", String.format("%,.2f", bunga) + "%%");
             System.out.printf("| Jangka Waktu (tahun) : %-24d |\n", jangkaWaktu);
             System.out.printf("| Tanggal Jatuh Tempo  : %-24s |\n", tanggalJatuhTempo);
             System.out.printf("| Kuota Nasional       : %,-24.2f |\n", kuotaNasional);
             System.out.println("===================================================");
+            input.enterToContinue();
 
             break;
         }
