@@ -19,8 +19,8 @@ public class SBNService {
             return false;
         }
 
-        if (nominal > sbnToBuy.getKuotaNasional()) {
-            System.out.printf("Kuota tidak mencukupi. Maksimum pembelian: %.2f\n", sbnToBuy.getKuotaNasional());
+        if (nominal > sbnToBuy.getNationalQuota()) {
+            System.out.printf("Kuota tidak mencukupi. Maksimum pembelian: %.2f\n", sbnToBuy.getNationalQuota());
             return false;
         }
         return true;

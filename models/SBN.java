@@ -3,16 +3,16 @@ package models;
 public class SBN {
     private String name;
     private double interestRate;
-    private int jangkaWaktu;
-    private String tanggalJatuhTempo;
-    private double kuotaNasional;
+    private int maturityPeriod;
+    private String maturityDate;
+    private double nationalQuota;
 
-    public SBN(String name, double interestRate, int jangkaWaktu, String tanggalJatuhTempo, double kuotaNasional) {
+    public SBN(String name, double interestRate, int maturityPeriod, String maturityDate, double nationalQuota) {
         this.name = name;
         this.interestRate = interestRate;
-        this.jangkaWaktu = jangkaWaktu;
-        this.tanggalJatuhTempo = tanggalJatuhTempo;
-        this.kuotaNasional = kuotaNasional;
+        this.maturityPeriod = maturityPeriod;
+        this.maturityDate = maturityDate;
+        this.nationalQuota = nationalQuota;
     }
 
     public String getName() {
@@ -23,19 +23,19 @@ public class SBN {
         return interestRate;
     }
 
-    public int getJangkaWaktu() {
-        return jangkaWaktu;
+    public int getMaturityPeriod() {
+        return maturityPeriod;
     }
 
-    public String getTanggalJatuhTempo() {
-        return tanggalJatuhTempo;
+    public String getMaturityDate() {
+        return maturityDate;
     }
 
-    public double getKuotaNasional() {
-        return kuotaNasional;
+    public double getNationalQuota() {
+        return nationalQuota;
     }
 
-    public void setKuotaNasional(double kuotaNasional) {
-        this.kuotaNasional = kuotaNasional;
+    public void setNationalQuota(double nationalQuota) {
+        this.nationalQuota = nationalQuota;
     }
 }

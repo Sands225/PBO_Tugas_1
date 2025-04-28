@@ -212,9 +212,9 @@ public class AdminView {
             count++;
             System.out.printf("| %2d | Kode saham     : %-35s |\n", count, sbn.getName());
             System.out.printf("|    | Bunga SBN      : %-35s |\n", String.format("%,.2f", sbn.getInterestRate()));
-            System.out.printf("|    | Jangka Waktu   : %-35s |\n", String.format("%d", sbn.getJangkaWaktu()));
-            System.out.printf("|    | Jatuh Tempo    : %-35s |\n", sbn.getTanggalJatuhTempo());
-            System.out.printf("|    | Kuota nasional : %-35s |\n", String.format("%,.2f", sbn.getKuotaNasional()));
+            System.out.printf("|    | Jangka Waktu   : %-35s |\n", String.format("%d", sbn.getMaturityPeriod()));
+            System.out.printf("|    | Jatuh Tempo    : %-35s |\n", sbn.getMaturityDate());
+            System.out.printf("|    | Kuota nasional : %-35s |\n", String.format("%,.2f", sbn.getNationalQuota()));
             System.out.println("|    |                                                      |");
         }
         System.out.println("=============================================================");

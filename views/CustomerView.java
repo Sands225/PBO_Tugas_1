@@ -260,9 +260,9 @@ public class CustomerView {
             count++;
             System.out.printf("| %2d | Nama SBN      : %-36s |\n", count, sbn.getName());
             System.out.printf("|    | Bunga (tahun) : %-36s |\n", String.format("%,.2f", sbn.getInterestRate()));
-            System.out.printf("|    | Tanggal tempo : %-36s |\n", sbn.getTanggalJatuhTempo());
-            System.out.printf("|    | Jangka waktu  : %-36s |\n", String.format("%-2d", sbn.getJangkaWaktu()));
-            System.out.printf("|    | Kuota nasional: %-36s |\n", String.format("%,.2f", sbn.getKuotaNasional()));
+            System.out.printf("|    | Tanggal tempo : %-36s |\n", sbn.getMaturityDate());
+            System.out.printf("|    | Jangka waktu  : %-36s |\n", String.format("%-2d", sbn.getMaturityPeriod()));
+            System.out.printf("|    | Kuota nasional: %-36s |\n", String.format("%,.2f", sbn.getNationalQuota()));
             System.out.println("|    |                                                      |");
         }
         System.out.println("|===========================================================|");
@@ -332,7 +332,7 @@ public class CustomerView {
                 continue;
             }
 
-            sbnToBuy.setKuotaNasional(sbnToBuy.getKuotaNasional() - nominal);
+            sbnToBuy.setNationalQuota(sbnToBuy.getNationalQuota() - nominal);
 
             CustomerSBN customerSBN = SBNService.getCustomerSBNBySBNName(sbnName);
 
@@ -349,8 +349,8 @@ public class CustomerView {
             System.out.println("| Detail pembelian Surat Berharga Negara:                   |");
             System.out.printf("| Nama SBN      : %-45s |\n", customerSBN.getSBN().getName());
             System.out.printf("| Bunga (tahun) : %-45s |\n", String.format("%,.2f", customerSBN.getSBN().getInterestRate()));
-            System.out.printf("| Tanggal tempo : %-45s |\n", customerSBN.getSBN().getTanggalJatuhTempo());
-            System.out.printf("| Jangka waktu  : %-45s |\n", String.format("%2d", customerSBN.getSBN().getJangkaWaktu()));
+            System.out.printf("| Tanggal tempo : %-45s |\n", customerSBN.getSBN().getMaturityDate());
+            System.out.printf("| Jangka waktu  : %-45s |\n", String.format("%2d", customerSBN.getSBN().getMaturityPeriod()));
             System.out.printf("| Nominal       : %-45s |\n", String.format("%,.2f", customerSBN.getNominalInvestasi()));
             System.out.println("=============================================================");
 
@@ -386,7 +386,7 @@ public class CustomerView {
                 continue;
             }
 
-            int jangkaWaktu = sbnToSimulate.getJangkaWaktu();
+            int jangkaWaktu = sbnToSimulate.getMaturityPeriod();
             double annualRate = sbnToSimulate.getInterestRate();
             double monthlyInterest = annualRate * nominal * 0.9 / 12 ;
             double totalInterest = monthlyInterest * jangkaWaktu;
@@ -398,7 +398,7 @@ public class CustomerView {
             System.out.printf("| %-22s : Rp %,-30.2f |\n", "Nominal Investasi", nominal);
             System.out.printf("| %-22s : %-33s |\n", "Suku Bunga", String.format("%.2f%% per tahun", annualRate * 100));
             System.out.printf("| %-22s : %-33s |\n", "Jangka Waktu", jangkaWaktu + " bulan");
-            System.out.printf("| %-22s : %-33s |\n", "Tanggal Jatuh Tempo", sbnToSimulate.getTanggalJatuhTempo());
+            System.out.printf("| %-22s : %-33s |\n", "Tanggal Jatuh Tempo", sbnToSimulate.getMaturityDate());
             System.out.println("|-----------------------------------------------------------|");
             System.out.printf("| %-22s : Rp %,-30.2f |\n", "Bunga per Bulan", monthlyInterest);
             System.out.printf("| %-22s : Rp %,-30.2f |\n", "Total Bunga", totalInterest);
@@ -452,8 +452,8 @@ public class CustomerView {
 
                 System.out.printf("| %-2d | Nama SBN        : %-34s |\n", count, customerSBN.getSBN().getName());
                 System.out.printf("|    | Bunga (tahun)   : %-34s |\n", String.format("%.2f%%", customerSBN.getSBN().getInterestRate()) + " per tahun");
-                System.out.printf("|    | Tanggal tempo   : %-34s |\n", customerSBN.getSBN().getTanggalJatuhTempo());
-                System.out.printf("|    | Jangka waktu    : %-34s |\n", String.format("%d", customerSBN.getSBN().getJangkaWaktu()) + " tahun");
+                System.out.printf("|    | Tanggal tempo   : %-34s |\n", customerSBN.getSBN().getMaturityDate());
+                System.out.printf("|    | Jangka waktu    : %-34s |\n", String.format("%d", customerSBN.getSBN().getMaturityPeriod()) + " tahun");
                 System.out.printf("|    | Nominal         : Rp %,-31.2f |\n", customerSBN.getNominalInvestasi());
                 System.out.printf("|    | Bunga per bulan : Rp %,-31.2f |\n", monthlyInterest);
                 System.out.println("|    |                                                      |");
@@ -551,8 +551,8 @@ public class CustomerView {
             System.out.println("=============================================================");
             System.out.printf("| Nama SBN             : %-34s |\n", sbn.getName());
             System.out.printf("| Bunga (per tahun)    : %-34s |\n", String.format("%,.2f", annualRate) + " %");
-            System.out.printf("| Jangka Waktu         : %-34s |\n", String.format("%d", sbn.getJangkaWaktu()) + " tahun");
-            System.out.printf("| Tanggal Jatuh Tempo  : %-34s |\n", sbn.getTanggalJatuhTempo());
+            System.out.printf("| Jangka Waktu         : %-34s |\n", String.format("%d", sbn.getMaturityPeriod()) + " tahun");
+            System.out.printf("| Tanggal Jatuh Tempo  : %-34s |\n", sbn.getMaturityDate());
             System.out.printf("| Nominal Pembelian    : RP %,-31.2f |\n", monthlyInterest);
             System.out.println("|-----------------------------------------------------------|");
             System.out.printf("| Total Harga    : RP %,-31.2f |\n", monthlyInterest);
