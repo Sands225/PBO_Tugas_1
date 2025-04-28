@@ -3,9 +3,9 @@ package utils;
 import java.util.Scanner;
 
 public class Input {
-    private final Scanner scanner = new Scanner(System.in);
+    private static final Scanner scanner = new Scanner(System.in);
 
-    public String inputNextLine(String prompt) {
+    public static String inputNextLine(String prompt) {
         while (true) {
             System.out.print(prompt);
             String input = scanner.nextLine().trim();
@@ -19,7 +19,7 @@ public class Input {
         }
     }
 
-    public int inputNextInt(String prompt) {
+    public static int inputNextInt(String prompt) {
         while (true) {
             System.out.print(prompt);
             String input = scanner.nextLine().trim();
@@ -38,7 +38,7 @@ public class Input {
     }
 
 
-    public double inputNextDouble(String prompt) {
+    public static double inputNextDouble(String prompt) {
         while (true) {
             System.out.print(prompt);
             String input = scanner.nextLine().trim();
@@ -56,7 +56,7 @@ public class Input {
         }
     }
 
-    public void enterToContinue() {
+    public static void enterToContinue() {
         System.out.print("Tekan enter untuk melanjutkan...");
         scanner.nextLine();
         System.out.println(" ");

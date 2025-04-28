@@ -2,23 +2,16 @@ package views;
 
 import data.DataStore;
 import models.*;
-import services.SahamService;
 import services.SBNService;
+import services.SahamService;
 import utils.*;
 
-import static views.View.retry;
-
 public class CustomerView {
-    private final Input input = new Input();
-    private final SahamService sahamService = new SahamService();
-    private final SBNService sbnService = new SBNService();
-    private final Clear clear = new Clear();
-
-    public void customerMenu(Customer customer) {
+    public static void customerMenu(Customer customer) {
         int choice;
 
         do {
-            clear.clearScreen();
+            Clear.clearScreen();
 
             System.out.println("=============================================================");
             System.out.println("|                       Customer Menu                       |");
@@ -28,7 +21,7 @@ public class CustomerView {
             System.out.println("| 3. Portofolio                                             |");
             System.out.println("| 4. Logout                                                 |");
             System.out.println("=============================================================");
-            choice = input.inputNextInt("Masukkan pilihan Anda: ");
+            choice = Input.inputNextInt("Masukkan pilihan Anda: ");
 
             switch (choice) {
                 case 1:
@@ -41,15 +34,14 @@ public class CustomerView {
                     customerPortofolio(customer);
                     break;
                 case 4:
-                    View view = new View();
-                    view.mainView();
+                    View.mainView();
                     break;
             }
         } while (choice < 1 || choice > 4);
     }
 
-    public void showAllCustomerSaham(Customer customer) {
-        clear.clearScreen();
+    public static void showAllCustomerSaham(Customer customer) {
+        Clear.clearScreen();
         int count = 0;
 
         System.out.println("=============================================================");
@@ -70,11 +62,11 @@ public class CustomerView {
         }
         System.out.println("=============================================================");
 
-        input.enterToContinue();
+        Input.enterToContinue();
     }
 
-    public void showAllAvailableSaham() {
-        clear.clearScreen();
+    public static void showAllAvailableSaham() {
+        Clear.clearScreen();
         int count = 0;
 
         System.out.println("=============================================================");
@@ -82,30 +74,29 @@ public class CustomerView {
         System.out.println("=============================================================");
         for (Saham saham: DataStore.saham) {
             count++;
-            System.out.printf("| %2d | Kode saham : %-29s |\n", count, saham.getCode());
-            System.out.printf("|    | Perusahaan : %-29s |\n", saham.getCompany());
-            System.out.printf("|    | Harga saham: %-29s |\n", String.format("%,.2f", saham.getPrice()));
-            System.out.println("|   |                                                       |");
+            System.out.printf("| %2d | Kode saham : %-39s |\n", count, saham.getCode());
+            System.out.printf("|    | Perusahaan : %-39s |\n", saham.getCompany());
+            System.out.printf("|    | Harga saham: %-39s |\n", String.format("%,.2f", saham.getPrice()));
+            System.out.println("|    |                                                      |");
         }
         System.out.println("=============================================================");
 
-        input.enterToContinue();
+        Input.enterToContinue();
     }
 
-    public void customerSahamMenu(Customer customer) {
+    public static void customerSahamMenu(Customer customer) {
         int choice;
 
-//        showAllCustomerSaham(customer);
-        clear.clearScreen();
+        Clear.clearScreen();
         do {
             System.out.println("=============================================================");
             System.out.println("|                     Customer - Menu Saham                 |");
-            System.out.println("=============================================================");
+            System.out.println("|===========================================================|");
             System.out.println("| 1. Jual Saham                                             |");
             System.out.println("| 2. Beli Saham                                             |");
             System.out.println("| 3. Kembali                                                |");
             System.out.println("=============================================================");
-            choice = input.inputNextInt("Masukkan pilihan Anda: ");
+            choice = Input.inputNextInt("Masukkan pilihan Anda: ");
 
             switch (choice) {
                 case 1:
@@ -123,7 +114,7 @@ public class CustomerView {
         } while (choice < 1 || choice > 3);
     }
 
-    public void customerSellSaham(Customer customer) {
+    public static void customerSellSaham(Customer customer) {
         while (true) {
             showAllCustomerSaham(customer);
 
@@ -131,35 +122,45 @@ public class CustomerView {
             System.out.println("|                   Customer - Jual Saham                   |");
             System.out.println("=============================================================");
 
-            String sahamCode = input.inputNextLine("| Masukkan kode saham: ");
-            CustomerSaham customerSaham = sahamService.getCustomerSahamBySahamCode(sahamCode);
+            String sahamCode = Input.inputNextLine("| Masukkan kode saham: ");
+            CustomerSaham customerSaham = SahamService.getCustomerSahamBySahamCode(sahamCode);
 
             if (customerSaham == null) {
                 System.out.println("Kode saham tidak ditemukan di portofolio Anda.");
-                input.enterToContinue();
-                if (!retry()) {
+                Input.enterToContinue();
+                if (!View.retry()) {
                     customerSahamMenu(customer);
                     return;
                 }
                 continue;
             }
 
-            int quantity = input.inputNextInt("| Masukkan jumlah saham: ");
-            boolean qtyStatus = sahamService.checkCustomerSahamQuantity(quantity, customerSaham.getQuantity());
+            int quantity = Input.inputNextInt("| Masukkan jumlah saham: ");
+            boolean qtyStatus = SahamService.checkCustomerSahamQuantity(quantity, customerSaham.getQuantity());
 
             if (!qtyStatus) {
                 System.out.println("=============================================================");
                 System.out.println("|                 Jumlah saham tidak mencukupi              |");
                 System.out.printf("|            Anda hanya memiliki %d saham %-10s    |\n", customerSaham.getQuantity(), customerSaham.getSaham().getCode());
                 System.out.println("=============================================================");
-                if (!retry()) {
+                if (!View.retry()) {
                     customerMenu(customer);
                     return;
                 }
                 continue;
             }
 
-            sahamService.subtractCustomerSahamQuantity(customerSaham, quantity);
+            boolean action = sellSahamConfirmation(customerSaham, quantity);
+            if (!action) {
+                System.out.println("=============================================================");
+                System.out.println("|                 Penjualan Saham dibatalkan!               |");
+                System.out.println("=============================================================");
+                Input.enterToContinue();
+
+                continue;
+            }
+
+            SahamService.subtractCustomerSahamQuantity(customerSaham, quantity);
 
             System.out.println("=============================================================");
             System.out.println("|                 Berhasil Menjual Saham!                   |");
@@ -177,13 +178,13 @@ public class CustomerView {
 
             }
 
-            input.enterToContinue();
+            Input.enterToContinue();
             customerSahamMenu(customer);
             return;
         }
     }
 
-    public void customerBuySaham(Customer customer) {
+    public static void customerBuySaham(Customer customer) {
         while (true) {
             showAllAvailableSaham();
 
@@ -191,33 +192,43 @@ public class CustomerView {
             System.out.println("|                    Customer - Beli Saham                  |");
             System.out.println("=============================================================");
 
-            String sahamCode = input.inputNextLine("| Masukkan kode saham: ");
-            Saham sahamToBuy = sahamService.getSahamByCode(sahamCode);
+            String sahamCode = Input.inputNextLine("| Masukkan kode saham: ");
+            Saham sahamToBuy = SahamService.getSahamByCode(sahamCode);
 
             if (sahamToBuy == null) {
                 System.out.println("Kode saham tidak ditemukan.");
-                if (!retry()) {
+                if (!View.retry()) {
                     customerSahamMenu(customer);
                     return;
                 }
                 continue;
             }
 
-            int quantity = input.inputNextInt("Masukkan jumlah saham yang ingin dibeli: ");
+            int quantity = Input.inputNextInt("Masukkan jumlah saham yang ingin dibeli: ");
             if (quantity <= 0) {
                 System.out.println("Jumlah saham harus lebih dari 0.");
-                if (!retry()) {
+                if (!View.retry()) {
                     customerSahamMenu(customer);
                     return;
                 }
+                continue;
+            }
+
+            boolean action = buySahamConfirmation(sahamToBuy, quantity);
+            if (!action) {
+                System.out.println("=============================================================");
+                System.out.println("|                 Pembelian Saham dibatalkan!               |");
+                System.out.println("=============================================================");
+                Input.enterToContinue();
+
                 continue;
             }
 
             double totalPurchase = quantity * sahamToBuy.getPrice();
-            CustomerSaham customerSaham = sahamService.getCustomerSahamBySahamCode(sahamCode);
+            CustomerSaham customerSaham = SahamService.getCustomerSahamBySahamCode(sahamCode);
 
             if (customerSaham != null) {
-                sahamService.addQuantityAndTotalPurchase(customerSaham, quantity, totalPurchase);
+                SahamService.addQuantityAndTotalPurchase(customerSaham, quantity, totalPurchase);
             } else {
                 customerSaham = new CustomerSaham(customer.getName(), sahamToBuy, quantity, totalPurchase);
                 DataStore.customerSaham.add(customerSaham);
@@ -231,14 +242,14 @@ public class CustomerView {
             System.out.printf("| Jumlah     : %-44s |\n", String.format("%d", customerSaham.getQuantity()));
             System.out.println("|===========================================================|");
 
-            input.enterToContinue();
+            Input.enterToContinue();
             customerSahamMenu(customer);
             return;
         }
     }
 
-    public void showAllSBN() {
-        clear.clearScreen();
+    public static void showAllSBN() {
+        Clear.clearScreen();
         int count = 0;
 
         System.out.println("|===========================================================|");
@@ -257,8 +268,8 @@ public class CustomerView {
         System.out.println("|===========================================================|");
     }
 
-    public void customerSBNMenu(Customer customer) {
-        clear.clearScreen();
+    public static void customerSBNMenu(Customer customer) {
+        Clear.clearScreen();
         int choice;
 
         do {
@@ -269,7 +280,7 @@ public class CustomerView {
             System.out.println("| 2. Simulasi Surat Berharga Negara                         |");
             System.out.println("| 3. Kembali                                                |");
             System.out.println("|===========================================================|");
-            choice = input.inputNextInt("| Masukkan pilihan Anda: ");
+            choice = Input.inputNextInt("Masukkan pilihan Anda: ");
 
             switch (choice) {
                 case 1:
@@ -285,44 +296,54 @@ public class CustomerView {
         } while (choice < 1 || choice > 3);
     }
 
-    public void customerBuySBN(Customer customer) {
+    public static void customerBuySBN(Customer customer) {
         while (true) {
             showAllSBN();
-            String sbnName = input.inputNextLine("| Masukkan nama SBN: ");
-            SBN sbnToBuy = sbnService.getSBNByName(sbnName);
+            String sbnName = Input.inputNextLine("| Masukkan nama SBN: ");
+            SBN sbnToBuy = SBNService.getSBNByName(sbnName);
 
             if (sbnToBuy == null) {
                 System.out.println("| Nama SBN tidak ditemukan.");
-                if (!retry()) {
+                if (!View.retry()) {
                     customerSBNMenu(customer);
                     return;
                 }
                 continue;
             }
 
-            double nominal = input.inputNextDouble("| Masukkan jumlah nominal pembelian SBN: ");
-            boolean isNominalValid = sbnService.checkNominalInvestasi(sbnToBuy, nominal);
+            double nominal = Input.inputNextDouble("| Masukkan jumlah nominal pembelian SBN: ");
+            boolean isNominalValid = SBNService.checkNominalInvestasi(sbnToBuy, nominal);
 
             if (!isNominalValid) {
-                if (!retry()) {
+                if (!View.retry()) {
                     customerSBNMenu(customer);
                     return;
                 }
+                continue;
+            }
+
+            boolean action = buySBNConfirmation(sbnToBuy, nominal);
+            if (!action) {
+                System.out.println("=============================================================");
+                System.out.println("|        Pembelian Surat Berharga Negara dibatalkan!        |");
+                System.out.println("=============================================================");
+                Input.enterToContinue();
+
                 continue;
             }
 
             sbnToBuy.setKuotaNasional(sbnToBuy.getKuotaNasional() - nominal);
 
-            CustomerSBN customerSBN = sbnService.getCustomerSBNBySBNName(sbnName);
+            CustomerSBN customerSBN = SBNService.getCustomerSBNBySBNName(sbnName);
 
             if (customerSBN != null) {
-                sbnService.addNominalInvestasi(customerSBN, nominal);
+                SBNService.addNominalInvestasi(customerSBN, nominal);
             } else  {
                 customerSBN = new CustomerSBN(customer.getName(), sbnToBuy, nominal);
                 DataStore.customerSBN.add(customerSBN);
             }
 
-            System.out.println("|===========================================================|");
+            System.out.println("=============================================================");
             System.out.println("|          Pembelian Surat Berharga Negara Berhasil!        |");
             System.out.println("|===========================================================|");
             System.out.println("| Detail pembelian Surat Berharga Negara:                   |");
@@ -331,34 +352,34 @@ public class CustomerView {
             System.out.printf("| Tanggal tempo : %-45s |\n", customerSBN.getSBN().getTanggalJatuhTempo());
             System.out.printf("| Jangka waktu  : %-45s |\n", String.format("%2d", customerSBN.getSBN().getJangkaWaktu()));
             System.out.printf("| Nominal       : %-45s |\n", String.format("%,.2f", customerSBN.getNominalInvestasi()));
-            System.out.println("|===========================================================|");
+            System.out.println("=============================================================");
 
             customerSBNMenu(customer);
             break;
         }
     }
 
-    public void customerSBNSimulation(Customer customer) {
+    public static void customerSBNSimulation(Customer customer) {
         while (true) {
             showAllSBN();
-            String sbnName = input.inputNextLine("| Masukkan nama SBN: ");
-            SBN sbnToSimulate = sbnService.getSBNByName(sbnName);
+            String sbnName = Input.inputNextLine("| Masukkan nama SBN: ");
+            SBN sbnToSimulate = SBNService.getSBNByName(sbnName);
 
             if (sbnToSimulate == null) {
-                System.out.println("| Nama SBN tidak ditemukan.");
-                if (!retry()) {
+                System.out.println("Nama SBN tidak ditemukan.");
+                if (!View.retry()) {
                     customerSBNMenu(customer);
                     return;
                 }
                 continue;
             }
 
-            double nominal = input.inputNextDouble("| Masukkan jumlah nominal SBN: ");
-            boolean isNominalValid = sbnService.checkNominalInvestasi(sbnToSimulate, nominal);
+            double nominal = Input.inputNextDouble("| Masukkan jumlah nominal SBN: ");
+            boolean isNominalValid = SBNService.checkNominalInvestasi(sbnToSimulate, nominal);
 
             if (!isNominalValid) {
-                System.out.println("| Nominal tidak boleh melebihi kuota nasional");
-                if (!retry()) {
+                System.out.println("Nominal tidak boleh melebihi kuota nasional");
+                if (!View.retry()) {
                     customerSBNMenu(customer);
                     return;
                 }
@@ -387,11 +408,11 @@ public class CustomerView {
             break;
         }
 
-        input.enterToContinue();
+        Input.enterToContinue();
         customerSBNMenu(customer);
     }
 
-    public void showAllDetailCustomerSaham(Customer customer) {
+    public static void showAllDetailCustomerSaham(Customer customer) {
         int count = 0;
         double currMarketValue;
 
@@ -400,7 +421,7 @@ public class CustomerView {
         System.out.println("=============================================================");
         for (CustomerSaham customerSaham: DataStore.customerSaham) {
             if(customerSaham.getCustomerName().equals(customer.getName())) {
-                currMarketValue = sahamService.getMarketBySahamCode(customerSaham.getSaham().getCode());
+                currMarketValue = SahamService.getMarketBySahamCode(customerSaham.getSaham().getCode());
                 count++;
                 System.out.printf("| %2d | Kode saham       : %-33s |\n", count, customerSaham.getSaham().getCode());
                 System.out.printf("|    | Jumlah saham     : %-33d |\n", customerSaham.getQuantity());
@@ -415,7 +436,7 @@ public class CustomerView {
         System.out.println("=============================================================");
     }
 
-    public void showAllDetailCustomerSBN(Customer customer) {
+    public static void showAllDetailCustomerSBN(Customer customer) {
         int count = 0;
 
         System.out.println("=============================================================");
@@ -445,36 +466,36 @@ public class CustomerView {
         System.out.println("=============================================================");
     }
 
-    public void customerPortofolio(Customer customer) {
-        clear.clearScreen();
+    public static void customerPortofolio(Customer customer) {
+        Clear.clearScreen();
 
         showAllDetailCustomerSaham(customer);
         System.out.println(" ");
         showAllDetailCustomerSBN(customer);
 
-        input.enterToContinue();
+        Input.enterToContinue();
         customerMenu(customer);
     }
 
-    public boolean buySahamConfirmation(String sahamCode, String company, double price, double amount) {
+    public static boolean buySahamConfirmation(Saham sahamToBuy, double amount) {
         while (true) {
             int choice;
 
-            clear.clearScreen();
+            Clear.clearScreen();
             System.out.println("=============================================================");
             System.out.println("|                 Konfirmasi Pembelian Saham                |");
             System.out.println("=============================================================");
-            System.out.printf("| Nama Saham       : %-38s |\n", sahamCode);
-            System.out.printf("| Perusahaan       : %-38s |\n", company);
-            System.out.printf("| Harga per lembar : Rp %,-35.2f |\n", price);
+            System.out.printf("| Nama Saham       : %-38s |\n", sahamToBuy.getCode());
+            System.out.printf("| Perusahaan       : %-38s |\n", sahamToBuy.getCompany());
+            System.out.printf("| Harga per lembar : Rp %,-35.2f |\n", sahamToBuy.getPrice());
             System.out.printf("| Banyak lembar    : %,-38.2f |\n", amount);
             System.out.println("|-----------------------------------------------------------|");
-            System.out.printf("| Total Harga      : %,-38.2f |\n", price * amount);
+            System.out.printf("| Total Harga      : %,-38.2f |\n", sahamToBuy.getPrice() * amount);
             System.out.println("|===========================================================|");
             System.out.println("| 1. Beli Saham                                             |");
             System.out.println("| 2. Batalkan Pembelian                                     |");
             System.out.println("=============================================================");
-            choice = input.inputNextInt("Masukkan pilihan Anda: ");
+            choice = Input.inputNextInt("Masukkan pilihan Anda: ");
 
             switch (choice) {
                 case 1:
@@ -487,25 +508,25 @@ public class CustomerView {
         }
     }
 
-    public boolean sellSahamConfirmation(String sahamCode, String company, double price, double amount) {
+    public static boolean sellSahamConfirmation(CustomerSaham customerSaham, double amount) {
         while (true) {
             int choice;
 
-            clear.clearScreen();
+            Clear.clearScreen();
             System.out.println("=============================================================");
             System.out.println("|                Konfirmasi Penjualan Data Saham            |");
             System.out.println("=============================================================");
-            System.out.printf("| Nama Saham       : %-38s |\n", sahamCode);
-            System.out.printf("| Perusahaan       : %-38s |\n", company);
-            System.out.printf("| Harga per lembar : Rp %,-35.2f |\n", price);
+            System.out.printf("| Nama Saham       : %-38s |\n", customerSaham.getSaham().getCode());
+            System.out.printf("| Perusahaan       : %-38s |\n", customerSaham.getSaham().getCompany());
+            System.out.printf("| Harga per lembar : Rp %,-35.2f |\n", customerSaham.getSaham().getPrice());
             System.out.printf("| Banyak lembar    : %,-38.2f |\n", amount);
             System.out.println("|-----------------------------------------------------------|");
-            System.out.printf("| Total Harga      : %,-38.2f |\n", price * amount);
+            System.out.printf("| Total Harga      : %,-38.2f |\n", customerSaham.getSaham().getPrice() * amount);
             System.out.println("|===========================================================|");
             System.out.println("| 1. Simpan Perubahan                                        |");
             System.out.println("| 2. Batalkan Perubahan                                      |");
             System.out.println("=============================================================");
-            choice = input.inputNextInt("Masukkan pilihan Anda: ");
+            choice = Input.inputNextInt("Masukkan pilihan Anda: ");
 
             switch (choice) {
                 case 1:
@@ -518,21 +539,20 @@ public class CustomerView {
         }
     }
 
-    public boolean buySBNConfirmation(String sbnName, double interestRate, int jangkaWaktu, String tanggalJatuhTempo, double nominal) {
+    public static boolean buySBNConfirmation(SBN sbn, double nominal) {
         while (true) {
-            double annualRate = interestRate / 100;
+            int choice;
+            double annualRate = sbn.getInterestRate() / 100;
             double monthlyInterest = annualRate * nominal * 0.9 / 12 ;
 
-            int choice;
-
-            clear.clearScreen();
+            Clear.clearScreen();
             System.out.println("=============================================================");
             System.out.println("|         Konfirmasi Penambahan Surat Berharga Negara       |");
             System.out.println("=============================================================");
-            System.out.printf("| Nama SBN             : %-34s |\n", sbnName);
+            System.out.printf("| Nama SBN             : %-34s |\n", sbn.getName());
             System.out.printf("| Bunga (per tahun)    : %-34s |\n", String.format("%,.2f", annualRate) + " %");
-            System.out.printf("| Jangka Waktu         : %-34s |\n", String.format("%d", jangkaWaktu) + " tahun");
-            System.out.printf("| Tanggal Jatuh Tempo  : %-34s |\n", tanggalJatuhTempo);
+            System.out.printf("| Jangka Waktu         : %-34s |\n", String.format("%d", sbn.getJangkaWaktu()) + " tahun");
+            System.out.printf("| Tanggal Jatuh Tempo  : %-34s |\n", sbn.getTanggalJatuhTempo());
             System.out.printf("| Nominal Pembelian    : RP %,-31.2f |\n", monthlyInterest);
             System.out.println("|-----------------------------------------------------------|");
             System.out.printf("| Total Harga    : RP %,-31.2f |\n", monthlyInterest);
@@ -541,7 +561,7 @@ public class CustomerView {
             System.out.println("| 1. Tambahkan Surat Berharga Negara                        |");
             System.out.println("| 2. Batalkan Penambahan                                    |");
             System.out.println("=============================================================");
-            choice = input.inputNextInt("Masukkan pilihan Anda: ");
+            choice = Input.inputNextInt("Masukkan pilihan Anda: ");
 
             switch (choice) {
                 case 1:

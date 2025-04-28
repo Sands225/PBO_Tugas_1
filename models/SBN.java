@@ -1,11 +1,11 @@
 package models;
 
 public class SBN {
-    String name;
-    double interestRate;
-    int jangkaWaktu;
-    String tanggalJatuhTempo;
-    double kuotaNasional;
+    private String name;
+    private double interestRate;
+    private int jangkaWaktu;
+    private String tanggalJatuhTempo;
+    private double kuotaNasional;
 
     public SBN(String name, double interestRate, int jangkaWaktu, String tanggalJatuhTempo, double kuotaNasional) {
         this.name = name;
