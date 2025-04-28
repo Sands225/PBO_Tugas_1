@@ -26,14 +26,14 @@ public class CustomerView {
         }
 
         do {
-            System.out.println("===================================================");
-            System.out.println("|                  Customer Menu                  |");
-            System.out.println("|=================================================|");
-            System.out.println("| 1. Saham                                        |");
-            System.out.println("| 2. SBN                                          |");
-            System.out.println("| 3. Portofolio                                   |");
-            System.out.println("| 4. Logout                                       |");
-            System.out.println("===================================================");
+            System.out.println("=============================================================");
+            System.out.println("|                       Customer Menu                       |");
+            System.out.println("|===========================================================|");
+            System.out.println("| 1. Saham                                                  |");
+            System.out.println("| 2. SBN                                                    |");
+            System.out.println("| 3. Portofolio                                             |");
+            System.out.println("| 4. Logout                                                 |");
+            System.out.println("=============================================================");
             choice = input.inputNextInt("Masukkan pilihan Anda: ");
 
             switch (choice) {
@@ -56,9 +56,10 @@ public class CustomerView {
         clear.clearScreen();
         int count = 0;
 
-        System.out.println("===================================================");
-        System.out.println("|             Saham yang Anda miliki              |");
-        System.out.println("|=================================================|");
+        System.out.println("=============================================================");
+        System.out.println("|                   Saham yang Anda miliki                  |");
+        System.out.println("=============================================================");
+
         for (CustomerSaham customerSaham: DataStore.customerSaham) {
             if(customerSaham.getCustomerName().equals(customer.getName())) {
                 count++;
@@ -67,9 +68,9 @@ public class CustomerView {
             }
         }
         if (count <= 0) {
-            System.out.println("| Anda tidak memiliki saham tersisa!              |");
+            System.out.println("|           Anda tidak memiliki saham tersisa!              |");
         }
-        System.out.println("===================================================");
+        System.out.println("=============================================================");
 
         input.enterToContinue();
     }
@@ -78,16 +79,16 @@ public class CustomerView {
         clear.clearScreen();
         int count = 0;
 
-        System.out.println("===================================================");
-        System.out.println("|               Saham yang tersedia               |");
-        System.out.println("===================================================");
+        System.out.println("=============================================================");
+        System.out.println("|                     Saham yang tersedia                   |");
+        System.out.println("=============================================================");
         for (Saham saham: DataStore.saham) {
             count++;
             System.out.printf("| %2d | Kode saham : %-29s |\n", count, saham.getCode());
             System.out.printf("|    | Perusahaan : %-29s |\n", saham.getCompany());
             System.out.printf("|    | Harga saham: %-29s |\n", String.format("%,.2f", saham.getPrice()));
         }
-        System.out.println("===================================================");
+        System.out.println("=============================================================");
 
         input.enterToContinue();
     }
@@ -97,13 +98,13 @@ public class CustomerView {
 
         showAllCustomerSaham(customer);
         do {
-            System.out.println("===================================================");
-            System.out.println("|              Customer - Menu Saham              |");
-            System.out.println("|=================================================|");
-            System.out.println("| 1. Jual Saham                                   |");
-            System.out.println("| 2. Beli Saham                                   |");
-            System.out.println("| 3. Kembali                                      |");
-            System.out.println("===================================================");
+            System.out.println("=============================================================");
+            System.out.println("|                     Customer - Menu Saham                 |");
+            System.out.println("=============================================================");
+            System.out.println("| 1. Jual Saham                                             |");
+            System.out.println("| 2. Beli Saham                                             |");
+            System.out.println("| 3. Kembali                                                |");
+            System.out.println("=============================================================");
             choice = input.inputNextInt("Masukkan pilihan Anda: ");
 
             switch (choice) {
@@ -126,9 +127,10 @@ public class CustomerView {
         while (true) {
             showAllCustomerSaham(customer);
 
-            System.out.println("===================================================");
-            System.out.println("|              Customer - Jual Saham              |");
-            System.out.println("|=================================================|");
+            System.out.println("=============================================================");
+            System.out.println("|                   Customer - Jual Saham                   |");
+            System.out.println("=============================================================");
+
 
             String sahamCode = input.inputNextLine("| Masukkan kode saham: ");
             CustomerSaham customerSaham = sahamService.getCustomerSahamBySahamCode(sahamCode);
@@ -267,7 +269,6 @@ public class CustomerView {
             };
         }
         System.out.println("|=================================================|");
-//        input.enterToContinue();
     }
 
     public void customerSBNMenu(Customer customer) {
@@ -324,6 +325,7 @@ public class CustomerView {
                 }
                 continue;
             }
+
             sbnToBuy.setKuotaNasional(sbnToBuy.getKuotaNasional() - nominal);
 
             CustomerSBN customerSBN = sbnService.getCustomerSBNBySBNName(sbnName);
@@ -408,57 +410,61 @@ public class CustomerView {
         int count = 0;
         double currMarketValue;
 
-        System.out.println("===================================================");
-        System.out.println("|             Saham yang Anda miliki              |");
-        System.out.println("|=================================================|");
+        System.out.println("=============================================================");
+        System.out.println("|                   Saham yang Anda miliki                  |");
+        System.out.println("=============================================================");
         for (CustomerSaham customerSaham: DataStore.customerSaham) {
             if(customerSaham.getCustomerName().equals(customer.getName())) {
                 currMarketValue = sahamService.getMarketBySahamCode(customerSaham.getSaham().getCode());
                 count++;
-                System.out.printf("| %2d | Kode saham       : %-23s |\n", count, customerSaham.getSaham().getCode());
-                System.out.printf("|    | Jumlah saham     : %,-23.2f |\n", customerSaham.getQuantity());
-                System.out.printf("|    | Nominal Pembelian: %,-23.2f |\n", customerSaham.getTotalPurchaseValue());
-                System.out.printf("|    | Harga saat ini   : %,-23.2f |\n", currMarketValue);
+                System.out.printf("| %2d | Kode saham       : %-33s |\n", count, customerSaham.getSaham().getCode());
+                System.out.printf("|    | Jumlah saham     : %,-33.2f |\n", customerSaham.getQuantity());
+                System.out.printf("|    | Nominal Pembelian: Rp %,-30.2f |\n", customerSaham.getTotalPurchaseValue());
+                System.out.printf("|    | Harga saat ini   : Rp %,-30.2f |\n", currMarketValue);
+                System.out.println("|    |                                                      |");
             }
         }
         if (count <= 0) {
-            System.out.println("|        Anda belum memiliki saham apapun!        |");
+            System.out.println("|             Anda belum memiliki saham apapun!             |");
         }
-        System.out.println("===================================================");
+        System.out.println("=============================================================");
     }
 
     public void showAllDetailCustomerSBN(Customer customer) {
         int count = 0;
 
-        System.out.println("===================================================");
-        System.out.println("|     Surat Berharga Negara yang Anda miliki      |");
-        System.out.println("===================================================");
+        System.out.println("=============================================================");
+        System.out.println("|           Surat Berharga Negara yang Anda miliki          |");
+        System.out.println("=============================================================");
         for (CustomerSBN customerSBN : DataStore.customerSBN) {
             if (customerSBN.getCustomerName().equals(customer.getName())) {
                 count++;
 
-                double annualRate = customerSBN.getSBN().getInterestRate();
+                double annualRate = customerSBN.getSBN().getInterestRate() / 100;
                 double nominal = customerSBN.getNominalInvestasi();
                 double monthlyInterest = annualRate * nominal * 0.9 / 12 ;
 
-                System.out.printf("| %-2d | Nama SBN        : %-24s |\n", count, customerSBN.getSBN().getName());
-                System.out.printf("|    | Bunga (tahun)   : %-24s |\n", String.format("%.2f%%", customerSBN.getSBN().getInterestRate()));
-                System.out.printf("|    | Tanggal tempo   : %-24s |\n", customerSBN.getSBN().getTanggalJatuhTempo());
-                System.out.printf("|    | Jangka waktu    : %-24d |\n", customerSBN.getSBN().getJangkaWaktu());
-                System.out.printf("|    | Nominal         : %,-24.2f |\n", customerSBN.getNominalInvestasi());
-                System.out.printf("|    | Bunga per bulan : %,-24.2f |\n", monthlyInterest);
+                System.out.printf("| %-2d | Nama SBN        : %-34s |\n", count, customerSBN.getSBN().getName());
+                System.out.printf("|    | Bunga (tahun)   : %-34s |\n", String.format("%.2f%%", customerSBN.getSBN().getInterestRate()));
+                System.out.printf("|    | Tanggal tempo   : %-34s |\n", customerSBN.getSBN().getTanggalJatuhTempo());
+                System.out.printf("|    | Jangka waktu    : %-34s |\n", String.format("%d", customerSBN.getSBN().getJangkaWaktu()) + " tahun");
+                System.out.printf("|    | Nominal         : Rp %,-31.2f |\n", customerSBN.getNominalInvestasi());
+                System.out.printf("|    | Bunga per bulan : Rp %,-31.2f |\n", monthlyInterest);
+                System.out.println("|    |                                                      |");
+
             }
         }
         if (count == 0) {
-            System.out.println("|           Anda belum memiliki SBN apapun!        |");
+            System.out.println("|               Anda belum memiliki SBN apapun!              |");
         }
-        System.out.println("===================================================");
+        System.out.println("=============================================================");
     }
 
     public void customerPortofolio(Customer customer) {
         clear.clearScreen();
 
         showAllDetailCustomerSaham(customer);
+        System.out.println(" ");
         showAllDetailCustomerSBN(customer);
 
         input.enterToContinue();

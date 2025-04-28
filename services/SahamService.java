@@ -50,12 +50,4 @@ public class SahamService {
         }
     }
 
-    public boolean checkSahamAvailability(String sahamCode) {
-        for (Saham saham: DataStore.saham) {
-            if (saham.getCode().equals(sahamCode)) {
-                return true;
-            }
-        }
-        return false;
-    }
 }
