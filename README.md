@@ -2,7 +2,7 @@
 # Program Investasi Sederhana Berbasis Command Line
 Hai! Selamat datang pada Program Sederhana kami.
 <div style="text-align: justify">
-Proyek program investasi sederhana ini kami buat dengan tujuan, agar mampu mengimplementasikan konsep pemrograman berorientasi objek pada suatu studi kasus menggunakan bahasa pemrograman Java, serta sebagai syarat untuk menuntaskan Tugas I dari mata kuliah Pemrograman Berorientasi Obyek.
+Proyek program investasi sederhana ini kami buat dengan tujuan agar mampu mengimplementasikan konsep pemrograman berorientasi objek pada suatu studi kasus menggunakan bahasa pemrograman Java, serta sebagai syarat untuk menuntaskan Tugas 1 dari mata kuliah Pemrograman Berorientasi Obyek.
 </div>
 
 Program Investasi ini dirancang untuk dua jenis user dengan akses yang berbeda, yaitu:
@@ -11,7 +11,7 @@ Program Investasi ini dirancang untuk dua jenis user dengan akses yang berbeda, 
 
 <div style="text-align: justify">
 
-Program Investasi ini juga dilengkapi dengan input validasi pada class Input untuk memastikan pengguna memberikan input yang sesuai dengan yang dibutuhkan oleh program.
+Program Investasi ini juga dilengkapi dengan validasi input pada class Input untuk memastikan pengguna memberikan input yang sesuai dengan yang dibutuhkan oleh program.
 
 
 Selanjutnya, berikut merupakan deskripsi program, penjelasan bagaimana program akan dijalankan, dan UML dari program Investasi Sederhana.
@@ -23,6 +23,7 @@ Selanjutnya, berikut merupakan deskripsi program, penjelasan bagaimana program a
 
 # UML
 ![UML Program Investasi Sederhana](https://github.com/BagusEriW/Assets_PBO_Tugas_1/blob/main/%5BSaved%5D%20UML_PBO_Tugas_1.jpg?raw=true)
+*Ketuk untuk memperbesar gambar.*
 # Bagaimana Program Dijalankan
 <div style="text-align: justify">
 Program Investasi ini dijalankan dengan menerapkan konsep Object Oriented Programming yaitu:
