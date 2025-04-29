@@ -38,8 +38,13 @@ public class View {
         boolean isLoggedIn = false;
 
         while (!isLoggedIn) {
-            String inputName = Input.inputNextLine("Masukkan nama: ");
-            String inputPassword = Input.inputNextLine("Masukkan password: ");
+            Clear.clearScreen();
+            System.out.println("=============================================================");
+            System.out.println("|                           Login                           |");
+            System.out.println("|                Masukkan Nama dan Password                 |");
+            System.out.println("=============================================================");
+            String inputName = Input.inputNextLine("Masukkan nama : ");
+            String inputPassword = Input.inputNextLine("Masukkan password : ");
 
             isLoggedIn = authService.loginHandler(inputName, inputPassword);
         }
