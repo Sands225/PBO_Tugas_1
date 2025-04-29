@@ -65,7 +65,6 @@ public class View {
         int choice;
 
         do {
-//            Clear.clearScreen();
             System.out.println("=============================================================");
             System.out.println("| 1. Coba lagi                                              |");
             System.out.println("| 2. Kembali ke menu sebelumnya                             |");

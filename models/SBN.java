@@ -1,10 +1,10 @@
 package models;
 
 public class SBN {
-    private String name;
-    private double interestRate;
-    private int maturityPeriod;
-    private String maturityDate;
+    private final String name;
+    private final double interestRate;
+    private final int maturityPeriod;
+    private final String maturityDate;
     private double nationalQuota;
 
     public SBN(String name, double interestRate, int maturityPeriod, String maturityDate, double nationalQuota) {

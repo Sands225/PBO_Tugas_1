@@ -270,8 +270,8 @@ public class AdminView {
                 continue;
             }
 
-            double bunga = Input.inputNextDouble("Masukkan persentase bunga (per tahun): ");
-            if (bunga <= 0) {
+            double interest = Input.inputNextDouble("Masukkan persentase bunga (per tahun): ");
+            if (interest <= 0) {
                 System.out.println("=============================================================");
                 System.out.println("|         Persentase bunga harus lebih besar dari 0.        |");
                 System.out.println("=============================================================");
@@ -282,8 +282,8 @@ public class AdminView {
                 continue;
             }
 
-            int jangkaWaktu = Input.inputNextInt("Masukkan jangka waktu (tahun): ");
-            if (jangkaWaktu <= 0) {
+            int maturityPeriod = Input.inputNextInt("Masukkan jangka waktu (tahun): ");
+            if (maturityPeriod <= 0) {
                 System.out.println("=============================================================");
                 System.out.println("|          Jangka waktu harus lebih besar dari 0.           |");
                 System.out.println("=============================================================");
@@ -294,15 +294,14 @@ public class AdminView {
                 continue;
             }
 
-            String tanggalJatuhTempo = Input.inputNextLine("Masukkan tanggal jatuh tempo (dd-MM-yyyy): ");
+            String maturityDate = Input.inputNextLine("Masukkan tanggal jatuh tempo (dd-MM-yyyy): ");
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyy");
             try {
-                LocalDate.parse(tanggalJatuhTempo, formatter);
+                LocalDate.parse(maturityDate, formatter);
             } catch (DateTimeParseException e) {
                 Clear.clearScreen();
                 System.out.println("=============================================================");
                 System.out.println("|       Format tanggal tidak valid. Gunakan dd-MM-yyyy.     |");
-//                System.out.println("=============================================================");
                 if (!View.retry()) {
                     adminSBNMenu();
                     return;
@@ -310,8 +309,8 @@ public class AdminView {
                 continue;
             }
 
-            double kuotaNasional = Input.inputNextDouble("aMasukkan kuota nasional: ");
-            if (kuotaNasional <= 0) {
+            double nationalQouta = Input.inputNextDouble("Masukkan kuota nasional: ");
+            if (nationalQouta <= 0) {
                 Clear.clearScreen();
                 System.out.println("=============================================================");
                 System.out.println("|          Kuota nasional harus lebih besar dari 0.         |");
@@ -323,7 +322,7 @@ public class AdminView {
                 continue;
             }
 
-            boolean action = addSBNConfirmation(sbnName, bunga, jangkaWaktu, tanggalJatuhTempo, kuotaNasional);
+            boolean action = addSBNConfirmation(sbnName, interest, maturityPeriod, maturityDate, nationalQouta);
             if (!action) {
                 Clear.clearScreen();
                 System.out.println("=============================================================");
@@ -334,7 +333,7 @@ public class AdminView {
                 continue;
             }
 
-            SBN newSBN = new SBN(sbnName, bunga, jangkaWaktu, tanggalJatuhTempo, kuotaNasional);
+            SBN newSBN = new SBN(sbnName, interest, maturityPeriod, maturityDate, nationalQouta);
             DataStore.sbn.add(newSBN);
 
             Clear.clearScreen();
@@ -343,10 +342,10 @@ public class AdminView {
             System.out.println("=============================================================");
             System.out.println("| Detail SBN:                                               |");
             System.out.printf("| Nama SBN             : %-34s |\n", sbnName);
-            System.out.printf("| Bunga (per tahun)    : %-34s |\n", String.format("%,.2f", bunga) + " %");
-            System.out.printf("| Jangka Waktu         : %-34s |\n", String.format("%d", jangkaWaktu) + " tahun");
-            System.out.printf("| Tanggal Jatuh Tempo  : %-34s |\n", tanggalJatuhTempo);
-            System.out.printf("| Kuota Nasional       : RP %,-31.2f |\n", kuotaNasional);
+            System.out.printf("| Bunga (per tahun)    : %-34s |\n", String.format("%,.2f", interest) + " %");
+            System.out.printf("| Jangka Waktu         : %-34s |\n", String.format("%d", maturityPeriod) + " tahun");
+            System.out.printf("| Tanggal Jatuh Tempo  : %-34s |\n", maturityDate);
+            System.out.printf("| Kuota Nasional       : RP %,-31.2f |\n", nationalQouta);
             System.out.println("=============================================================");
             Input.enterToContinue();
 
@@ -412,7 +411,7 @@ public class AdminView {
         }
     }
 
-    public static boolean addSBNConfirmation(String sbnName, double bunga, int jangkaWaktu, String tanggalJatuhTempo, double kuotaNasional) {
+    public static boolean addSBNConfirmation(String sbnName, double interest, int maturityPeriod, String maturityDate, double nationalQouta) {
         while (true) {
             int choice;
 
@@ -421,10 +420,10 @@ public class AdminView {
             System.out.println("|         Konfirmasi Penambahan Surat Berharga Negara       |");
             System.out.println("=============================================================");
             System.out.printf("| Nama SBN             : %-34s |\n", sbnName);
-            System.out.printf("| Bunga (per tahun)    : %-34s |\n", String.format("%,.2f", bunga) + " %");
-            System.out.printf("| Jangka Waktu         : %-34s |\n", String.format("%d", jangkaWaktu) + " tahun");
-            System.out.printf("| Tanggal Jatuh Tempo  : %-34s |\n", tanggalJatuhTempo);
-            System.out.printf("| Kuota Nasional       : RP %,-31.2f |\n", kuotaNasional);
+            System.out.printf("| Bunga (per tahun)    : %-34s |\n", String.format("%,.2f", interest) + " %");
+            System.out.printf("| Jangka Waktu         : %-34s |\n", String.format("%d", maturityPeriod) + " tahun");
+            System.out.printf("| Tanggal Jatuh Tempo  : %-34s |\n", maturityDate);
+            System.out.printf("| Kuota Nasional       : RP %,-31.2f |\n", nationalQouta);
             System.out.println("|===========================================================|");
             System.out.println("| 1. Tambahkan Surat Berharga Negara                        |");
             System.out.println("| 2. Batalkan Penambahan                                    |");
