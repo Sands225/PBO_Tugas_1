@@ -1,8 +1,8 @@
 package models;
 
 public class CustomerSaham {
-    private String customerName;
-    private Saham saham;
+    private final String customerName;
+    private final Saham saham;
     private int quantity;
     private double totalPurchaseValue;
 

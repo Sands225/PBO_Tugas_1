@@ -25,6 +25,7 @@ public class View {
                     return;
                 case 2:
                     System.out.println("Terima kasih telah menggunakan program kami!");
+                    System.exit(0);
                     return;
                 default:
                     System.out.println("Pilihan tidak valid! Coba lagi");
@@ -59,6 +60,7 @@ public class View {
         int choice;
 
         do {
+//            Clear.clearScreen();
             System.out.println("=============================================================");
             System.out.println("| 1. Coba lagi                                              |");
             System.out.println("| 2. Kembali ke menu sebelumnya                             |");

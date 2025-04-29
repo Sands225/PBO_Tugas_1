@@ -1,8 +1,8 @@
 package models;
 
 public class Saham {
-    private String code;
-    private String company;
+    private final String code;
+    private final String company;
     private double price;
 
     public Saham(String code, String company, double price) {
