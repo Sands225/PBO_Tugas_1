@@ -18,14 +18,11 @@ Selanjutnya, berikut merupakan deskripsi program, penjelasan bagaimana program a
 </div>
 
 # Identitas Kontributor
-___
 1. Nama : I Made Sandika Wijaya NIM : 2405551082 Matkul : PBO (E)
 2. Nama : I Gusti Bagus Eri Widura NIM : 2405551054 Matkul : PBO (E)
 
 # UML
-___
 ![UML Program Investasi Sederhana](https://github.com/BagusEriW/Assets_PBO_Tugas_1/blob/main/%5BSaved%5D%20UML_PBO_Tugas_1.jpg?raw=true)
-___
 # Bagaimana Program Dijalankan
 <div style="text-align: justify">
 Program Investasi ini dijalankan dengan menerapkan konsep Object Oriented Programming yaitu:
@@ -105,8 +102,6 @@ Setelah melakukan login sebagai customer, maka user akan disambut dengan menu Cu
 </div>
 
 # Customer - Membeli Saham
-___
-
 ![Menu Customer Jual Saham](https://github.com/BagusEriW/Assets_PBO_Tugas_1/blob/main/1%20(17).jpeg?raw=true)
 ![Menu Membeli Saham](https://github.com/BagusEriW/Assets_PBO_Tugas_1/blob/main/1%20(17).jpeg?raw=true)
 ![Saham Tersedia](https://github.com/BagusEriW/Assets_PBO_Tugas_1/blob/main/1%20(15).jpeg?raw=true)
@@ -119,8 +114,6 @@ Customer dapat membeli saham dari daftar saham yang tersedia. Setelah memilih op
 </div>
 
 # Customer - Menjual Saham
-___
-
 ![Menu Menjual Saham](https://github.com/BagusEriW/Assets_PBO_Tugas_1/blob/main/1%20(22).jpeg?raw=true)
 ![Saham Dimiliki](https://github.com/BagusEriW/Assets_PBO_Tugas_1/blob/main/1%20(23).jpeg?raw=true)
 ![Jual Saham](https://github.com/BagusEriW/Assets_PBO_Tugas_1/blob/main/1%20(18).jpeg?raw=true)
@@ -132,7 +125,6 @@ Fitur ini memungkinkan customer untuk menjual saham yang telah dimiliki. Sistem 
 </div>
 
 # Customer - Membeli SBN
-___
 ![Menu Membeli SBN](https://github.com/BagusEriW/Assets_PBO_Tugas_1/blob/main/1%20(11).jpeg?raw=true)
 ![SBN Tersedia](https://github.com/BagusEriW/Assets_PBO_Tugas_1/blob/main/1%20(10).jpeg?raw=true)
 ![Membeli SBN](https://github.com/BagusEriW/Assets_PBO_Tugas_1/blob/main/1%20(12).jpeg?raw=true)
@@ -142,7 +134,6 @@ Customer dapat membeli produk Surat Berharga Negara (SBN) yang tersedia dalam si
 </div>
 
 # Customer - Simulasi SBN
-___
 ![Menu Simulasi SBN](https://github.com/BagusEriW/Assets_PBO_Tugas_1/blob/main/1%20(7).jpeg?raw=true)
 ![SBN Tersedia](https://github.com/BagusEriW/Assets_PBO_Tugas_1/blob/main/WhatsApp%20Image%202025-04-29%20at%204.32.06%20PM.jpeg?raw=true)
 ![Simulasi SBN2](https://github.com/BagusEriW/Assets_PBO_Tugas_1/blob/main/1%20(6).jpeg?raw=true)
@@ -153,7 +144,6 @@ Fitur simulasi ini memberikan gambaran kepada customer tentang potensi keuntunga
 </div>
 
 # Customer - Portofolio
-___
 ![Menu Portofolio](https://github.com/BagusEriW/Assets_PBO_Tugas_1/blob/main/1%20(3).jpeg?raw=true)
 ![Lihat Portofolio](https://github.com/BagusEriW/Assets_PBO_Tugas_1/blob/main/1%20(2).jpeg?raw=true)
 
