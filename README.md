@@ -20,7 +20,7 @@ Selanjutnya, berikut merupakan deskripsi program, penjelasan bagaimana program a
 2. Nama : I Gusti Bagus Eri Widura NIM : 2405551054 Matkul : PBO (E)
 
 # UML
-![UML Program Investasi Sederhana](https://github.com/BagusEriW/Assets_PBO_Tugas_1/blob/main/UML_Tugas_1_PBO.jpg?raw=true)
+![UML Program Investasi Sederhana](https://github.com/BagusEriW/Assets_PBO_Tugas_1/blob/main/UML_Tugas_PBO_1_Final.jpg?raw=true)
 *Ketuk untuk memperbesar gambar.*
 # Bagaimana Program Dijalankan
 <div style="text-align: justify">
