@@ -1,6 +1,5 @@
 # PBO_Tugas_1
 # Program Investasi Sederhana Berbasis Command Line
-___
 Hai! Selamat datang pada Program Sederhana kami.
 <div style="text-align: justify">
 Proyek program investasi sederhana ini kami buat dengan tujuan, agar mampu mengimplementasikan konsep pemrograman berorientasi objek pada suatu studi kasus menggunakan bahasa pemrograman Java, serta sebagai syarat untuk menuntaskan Tugas I dari mata kuliah Pemrograman Berorientasi Obyek.
