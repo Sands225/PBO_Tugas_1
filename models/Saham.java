@@ -1,9 +1,9 @@
 package models;
 
 public class Saham {
-    String code;
-    String company;
-    double price;
+    private final String code;
+    private final String company;
+    private double price;
 
     public Saham(String code, String company, double price) {
         this.code = code;

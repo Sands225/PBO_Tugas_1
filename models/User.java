@@ -1,14 +1,12 @@
 package models;
 
 public class User {
-    String name;
-    String password;
-    String role;
+    private final String name;
+    private final String password;
 
     public User(String name, String password, String role) {
         this.name = name;
         this.password = password;
-        this.role = role;
     }
 
     public String getName() {
@@ -17,9 +15,5 @@ public class User {
 
     public String getPassword() {
         return password;
-    }
-
-    public String getRole() {
-        return role;
     }
 }

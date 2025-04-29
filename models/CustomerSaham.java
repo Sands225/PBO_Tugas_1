@@ -1,12 +1,12 @@
 package models;
 
 public class CustomerSaham {
-    private String customerName;
-    private Saham saham;
-    private double quantity;
+    private final String customerName;
+    private final Saham saham;
+    private int quantity;
     private double totalPurchaseValue;
 
-    public CustomerSaham(String customerName, Saham saham, double quantity, double totalPurchaseValue) {
+    public CustomerSaham(String customerName, Saham saham, int quantity, double totalPurchaseValue) {
         this.customerName = customerName;
         this.saham = saham;
         this.quantity = quantity;
@@ -21,7 +21,7 @@ public class CustomerSaham {
         return saham;
     }
 
-    public double getQuantity() {
+    public int getQuantity() {
         return quantity;
     }
 
@@ -29,7 +29,7 @@ public class CustomerSaham {
         return totalPurchaseValue;
     }
 
-    public void setQuantity(double quantity) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 
