@@ -1,9 +1,7 @@
 # PBO_Tugas_1
 # Program Investasi Sederhana Berbasis Command Line
 Hai! Selamat datang pada Program Sederhana kami.
-<div style="text-align: justify">
-Proyek program investasi sederhana ini kami buat dengan tujuan agar mampu mengimplementasikan konsep pemrograman berorientasi objek pada suatu studi kasus menggunakan bahasa pemrograman Java, serta sebagai syarat untuk menuntaskan Tugas 1 dari mata kuliah Pemrograman Berorientasi Obyek.
-</div>
+<div style="text-align: justify">Proyek program investasi sederhana ini kami buat dengan tujuan agar mampu mengimplementasikan konsep pemrograman berorientasi objek pada suatu studi kasus menggunakan bahasa pemrograman Java, serta sebagai syarat untuk menuntaskan Tugas 1 dari mata kuliah Pemrograman Berorientasi Obyek.</div><br>
 
 Program Investasi ini dirancang untuk dua jenis user dengan akses yang berbeda, yaitu:
 1. Admin diberikan akses untuk menambahkan saham, mengubah harga saham, dan menambahkan produk SBN<br>
@@ -22,7 +20,7 @@ Selanjutnya, berikut merupakan deskripsi program, penjelasan bagaimana program a
 2. Nama : I Gusti Bagus Eri Widura NIM : 2405551054 Matkul : PBO (E)
 
 # UML
-![UML Program Investasi Sederhana](https://github.com/BagusEriW/Assets_PBO_Tugas_1/blob/main/%5BSaved%5D%20UML_PBO_Tugas_1.jpg?raw=true)
+![UML Program Investasi Sederhana](https://github.com/BagusEriW/Assets_PBO_Tugas_1/blob/main/UML_Tugas_1_PBO.jpg?raw=true)
 *Ketuk untuk memperbesar gambar.*
 # Bagaimana Program Dijalankan
 <div style="text-align: justify">
