@@ -13,7 +13,7 @@ public class AuthService {
 
     public boolean loginHandler(String inputName, String inputPassword) {
         for (User user: DataStore.users) {
-            if (user.getName().equals(inputName) && user.getPassword().equals(inputPassword)) {
+            if (user.getName().equalsIgnoreCase(inputName) && user.getPassword().equals(inputPassword)) {
                 if (user instanceof Admin) {
                     Admin admin = (Admin) user;
                     view.greetUser(admin.getName());
