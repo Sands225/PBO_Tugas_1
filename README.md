@@ -1,9 +1,9 @@
 # PBO_Tugas_1
 # Program Investasi Sederhana Berbasis Command Line
 ___
-Hai! Selamat datang pada proyek kecil kami.
+Hai! Selamat datang pada Program Sederhana kami.
 <div style="text-align: justify">
-Proyek program investasi sederhana ini kami buat dengan tujuan, agar mampu mengimplementasikan konsep pemrograman berorientasi objek pada suatu studi kasus menggunakan bahasa pemrograman Java, serta sebagai syarat untuk menuntaskan Tugas I dari mata kuliah PBO.
+Proyek program investasi sederhana ini kami buat dengan tujuan, agar mampu mengimplementasikan konsep pemrograman berorientasi objek pada suatu studi kasus menggunakan bahasa pemrograman Java, serta sebagai syarat untuk menuntaskan Tugas I dari mata kuliah Pemrograman Berorientasi Obyek.
 </div>
 
 Program Investasi ini dirancang untuk dua jenis user dengan akses yang berbeda, yaitu:
@@ -15,7 +15,7 @@ Program Investasi ini dirancang untuk dua jenis user dengan akses yang berbeda, 
 Program Investasi ini juga dilengkapi dengan input validasi pada class Input untuk memastikan pengguna memberikan input yang sesuai dengan yang dibutuhkan oleh program.
 
 
-Selanjutnya di bawah ini merupakan deskripsi program, penjelasan bagaimana program akan dijalankan, dan UML dari program Investasi Sederhana.
+Selanjutnya, berikut merupakan deskripsi program, penjelasan bagaimana program akan dijalankan, dan UML dari program Investasi Sederhana.
 </div>
 
 # Identitas Kontributor
@@ -25,7 +25,7 @@ ___
 
 # UML
 ___
-![UML Program Investasi Sederhana](https://github.com/BagusEriW/Assets_PBO_Tugas_1/blob/main/UML_PBO_Tugas_1.jpg?raw=true)
+![UML Program Investasi Sederhana](https://github.com/BagusEriW/Assets_PBO_Tugas_1/blob/main/%5BSaved%5D%20UML_PBO_Tugas_1.jpg?raw=true)
 ___
 # Bagaimana Program Dijalankan
 <div style="text-align: justify">
@@ -38,46 +38,42 @@ Program Investasi ini dijalankan dengan menerapkan konsep Object Oriented Progra
 </div>
 
 # Penggunaan Program
-<div style="text-align: justify">
-Di bawah ini merupakan tata cara penggunaan program investasi beserta hasil screenshot pada command line.
-</div>
+<div style="text-align: justify">Di bawah ini merupakan tata cara penggunaan Program Investasi Sederhana beserta hasil screenshot pada command line.</div>
 
 # Login Admin dan Customer
-![Login Admin](https://github.com/BagusEriW/Assets_PBO_Tugas_1/blob/main/WhatsApp%20Image%202025-04-29%20at%201.04.38%20PM.jpeg?raw=true)
-![Welcome Admin](https://github.com/BagusEriW/Assets_PBO_Tugas_1/blob/main/WhatsApp%20Image%202025-04-29%20at%201.04.38%20PM(2).jpeg?raw=true)
+![Login Admin](https://github.com/BagusEriW/Assets_PBO_Tugas_1/blob/main/login.jpeg?raw=true)
+![Welcome Admin](https://github.com/BagusEriW/Assets_PBO_Tugas_1/blob/main/welcomeAdmin.jpeg?raw=true)
 ![Login Customer](https://github.com/BagusEriW/Assets_PBO_Tugas_1/blob/main/WhatsApp%20Image%202025-04-29%20at%201.59.30%20PM(1).jpeg?raw=true)
 ![Welcome Customer](https://github.com/BagusEriW/Assets_PBO_Tugas_1/blob/main/WhatsApp%20Image%202025-04-29%20at%201.59.30%20PM.jpeg?raw=true)
-
-Setelah program dijalankan, user akan diminta untuk memasukan username dan password mereka. Jika valid, program akan menentukan apakah user termasuk Admin atau Customer. Jika benar maka program akan mengeluarkan pesan selamat datang seperti gambar di atas. Jika salah program akan meminta user untuk menginput ulang usename dan password yang valid.
+<div style="text-align: justify">Setelah program dijalankan, user akan diminta untuk memasukan username dan password mereka. Jika valid, program akan menentukan apakah user termasuk Admin atau Customer. Jika benar maka program akan mengeluarkan pesan selamat datang seperti gambar di atas. Jika salah program akan meminta user untuk menginput ulang usename dan password yang valid.</div>
 
 
 # Menu Administrator
-![menu admin](https://github.com/BagusEriW/Assets_PBO_Tugas_1/blob/main/WhatsApp%20Image%202025-04-29%20at%201.04.38%20PM(3).jpeg?raw=true)
-
+![menu admin](https://github.com/BagusEriW/Assets_PBO_Tugas_1/blob/main/AdminMenu.jpeg?raw=true)
 <div style="text-align: justify">Setelah melakukan login sebagai administrator, maka user akan disambut dengan menu dan dapat memilih intruksi tertera. Admin akan diminta untuk memilih opsi di atas dengan menginputkan angka untuk melanjutkan program.</div>
 
 # Admin - Menu Saham
-
-![Menu Saham](https://github.com/BagusEriW/Assets_PBO_Tugas_1/blob/main/1%20(41).jpeg?raw=true)
-Setelah Admin memasukkan opsi 1, maka Admin akan disambut dengan menu saham. Pada menu saham Admin dapat menambahkan saham, mengubah saham dan Kembali ke menu Administrator dengan memasukkan opsi terkait.
+![Menu Saham](https://github.com/BagusEriW/Assets_PBO_Tugas_1/blob/main/AdminMenuSaham.jpeg?raw=true)
+<div style="text-align: justify">Menu ini merupakan pusat pengelolaan data saham oleh administrator. Setelah memilih opsi "Saham" dari menu administrator, admin akan dihadapkan pada beberapa pilihan, seperti menambahkan saham baru, memperbarui harga saham yang sudah ada, dan kembali ke menu sebelumnya. Menu ini berfungsi sebagai akses langsung bagi admin untuk menjaga data saham tetap mutakhir dan relevan, serta memastikan portofolio investasi yang tersedia bagi customer selalu diperbarui secara akurat.</div>
 
 # Admin - Menambahkan Saham
-![Menu Admin Saham](https://github.com/BagusEriW/Assets_PBO_Tugas_1/blob/main/1%20(41).jpeg?raw=true)
-![Menu Menambahkan Saham](https://github.com/BagusEriW/Assets_PBO_Tugas_1/blob/main/1%20(42).jpeg?raw=true)
-![Saham Tersedia](https://github.com/BagusEriW/Assets_PBO_Tugas_1/blob/main/1%20(43).jpeg?raw=true)
-![Berhasil Menambahkan Saham](https://github.com/BagusEriW/Assets_PBO_Tugas_1/blob/main/1%20(38).jpeg?raw=true)
-![Berhasil Menambahkan Saham](https://github.com/BagusEriW/Assets_PBO_Tugas_1/blob/main/1%20(40).jpeg?raw=true)
-![Berhasil Menambahkan Saham](https://github.com/BagusEriW/Assets_PBO_Tugas_1/blob/main/1%20(39).jpeg?raw=true)
+![Menu Admin Saham](https://github.com/BagusEriW/Assets_PBO_Tugas_1/blob/main/AdminMenuSaham.jpeg?raw=true)
+![Menu Menambahkan Saham](https://github.com/BagusEriW/Assets_PBO_Tugas_1/blob/main/menusaham.jpeg?raw=true)
+![Saham Tersedia](https://github.com/BagusEriW/Assets_PBO_Tugas_1/blob/main/SahamTersedia.jpeg?raw=true)
+![Admin Menambahkan Saham](https://github.com/BagusEriW/Assets_PBO_Tugas_1/blob/main/admin-menambahkansaham.jpeg?raw=true)
+![Konfirmasi Menambahkan Saham](https://github.com/BagusEriW/Assets_PBO_Tugas_1/blob/main/konfirmasitambahsaham.jpeg?raw=true)
+![Berhasil Menambahkan Saham](https://github.com/BagusEriW/Assets_PBO_Tugas_1/blob/main/berhasiltambahsaha.jpeg?raw=true)
 
 <div style="text-align: justify">
-Fitur ini memungkinkan admin untuk menambahkan jenis saham baru ke dalam daftar investasi yang tersedia. Setelah memilih menu "Saham" dan memilih opsi untuk menambahkan saham, admin akan diminta untuk menginputkan data saham seperti nama saham, harga, dan kode saham. Data yang diinput akan divalidasi dan ditambahkan ke dalam sistem jika sudah sesuai. Proses ini memberikan fleksibilitas bagi admin dalam memperkaya portofolio investasi yang bisa diakses oleh customer.
+Fitur Menambah Saham memungkinkan administrator untuk menambahkan jenis saham baru ke dalam daftar investasi yang tersedia. Setelah memilih menu "Saham" dan memilih opsi untuk menambahkan saham, admin akan diminta untuk menginputkan data saham seperti nama saham, harga, dan kode saham. Data yang diinput akan divalidasi dan ditambahkan ke dalam sistem jika sudah sesuai. Proses ini memberikan fleksibilitas bagi admin dalam memperkaya portofolio investasi yang bisa diakses oleh customer.
 </div>
 
 # Admin - Memperbarui Saham
-![Menu Saham](https://github.com/BagusEriW/Assets_PBO_Tugas_1/blob/main/1%20(36).jpeg?raw=true)
-![Saham Tersedia](https://github.com/BagusEriW/Assets_PBO_Tugas_1/blob/main/1%20(37).jpeg?raw=true)
-![Mengubah Harga Saham](https://github.com/BagusEriW/Assets_PBO_Tugas_1/blob/main/1%20(35).jpeg?raw=true)
-![Konfirmasi Perbarui Saham](https://github.com/BagusEriW/Assets_PBO_Tugas_1/blob/main/1%20(34).jpeg?raw=true)
+![Menu Saham](https://github.com/BagusEriW/Assets_PBO_Tugas_1/blob/main/menusaham2.jpeg?raw=true)
+![Saham Tersedia](https://github.com/BagusEriW/Assets_PBO_Tugas_1/blob/main/SahamTersedia.jpeg?raw=true)
+![Mengubah Harga Saham](https://github.com/BagusEriW/Assets_PBO_Tugas_1/blob/main/mengubahhargasaham.jpeg?raw=true)
+![Konfirmasi Perbarui Saham](https://github.com/BagusEriW/Assets_PBO_Tugas_1/blob/main/konfirmasiperubahan.jpeg?raw=true)
+![berhasil Perbarui Saham](https://github.com/BagusEriW/Assets_PBO_Tugas_1/blob/main/berhasildiperbarui.jpeg?raw=true)
 
 <div style="text-align: justify">
 Fitur ini memberikan kemampuan bagi admin untuk memperbarui harga saham yang sudah terdaftar di sistem. Setelah memilih saham yang ingin diperbarui, admin cukup memasukkan harga baru yang diinginkan. Proses validasi input juga diterapkan agar data yang dimasukkan tetap sesuai format. Sistem kemudian menampilkan konfirmasi bahwa perubahan harga telah berhasil dilakukan.
